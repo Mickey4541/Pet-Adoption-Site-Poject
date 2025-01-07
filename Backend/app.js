@@ -3,6 +3,7 @@
 const express = require('express')
 const app = express()
 
+//middleware::
 //this line is important that express itself cannot handle json so we have to tell express to understand it.
 app.use(express.json())
 //if we are using ejs in nodejs , we have to write this urlencoded line and neglect the express.json() line.
@@ -40,6 +41,12 @@ const cors = require('cors')
 app.use(cors({
     origin : '*' //sabai incoming request accept garxa * ley.
 }))
+
+
+//Routes::
+const authRoute = require("./Routes/authRoute")
+app.use("/api/auth", authRoute)
+
 
 
 //success message from browser.
@@ -122,7 +129,7 @@ app.post('/animal', upload.single("animalImage"), async (req, res) => {
 const path = require('path');
 app.use('/storage', express.static(path.join(__dirname, 'Storage')));
 
-
-app.listen(3000, () => {
-    console.log("Node.js server has started at port 3000")
+const PORT = process.env.PORT || 3002;
+app.listen(PORT, () => {
+    console.log(`Node.js server has started at port ${PORT}`)
 })

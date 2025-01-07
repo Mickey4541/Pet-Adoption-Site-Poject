@@ -80,8 +80,9 @@ const upload = require('./Middleware/MulterConfig');
 
 # Listening to the port:
 ```js
-app.listen(3000, () => {
-    console.log("Node.js server has started at port 3000")
+const PORT = process.env.PORT || 3002;
+app.listen(PORT, () => {
+    console.log(`Node.js server has started at port ${PORT}`)
 })
 ```
 
@@ -192,8 +193,9 @@ const path = require('path');
 app.use('/storage', express.static(path.join(__dirname, 'Storage')));
 
 
-app.listen(3000, () => {
-    console.log("Node.js server has started at port 3000")
+const PORT = process.env.PORT || 3002;
+app.listen(PORT, () => {
+    console.log(`Node.js server has started at port ${PORT}`)
 })
 ```
 
@@ -267,4 +269,163 @@ app.post('/animal', upload.single("animalImage"), async (req, res) => {
 });
 
 ```
+# Bcryptjs:
+- npm install bcryptjs
 
+# Json Web Token (JWT):
+- npm install jsonwebtoken
+
+
+ # Folder Structure:
+ - make a Controller folder and inside that, make a authController.js file.
+
+  # Email validator:
+ - npm install validator
+
+```js
+//authcontroller.js
+
+const User = require("../Model/userModel")
+const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken") //whenever the user logged in, in the successful login, we need to give the token to the user.
+const validator = require('validator');
+
+
+//register
+const register = async (req, res) => {
+    const { username, email, password, role } = req.body;
+
+    // Email validation using Validator.js
+    if (!validator.isEmail(email)) {
+        return res.status(400).json({
+            message: "Invalid email format",
+        });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 8);
+
+    const newUser = new User({
+        username: username,
+        email: email,
+        password: hashedPassword,
+        role: role,
+    });
+    await newUser.save();
+
+    res.status(201).json({
+        message: `User is registered with username ${username}`,
+    });
+};
+
+
+//login
+const login = async (req, res) => {
+    const { username, email, password } = req.body;
+
+    try {
+        // Find user by username or email
+        const user = await User.findOne({
+            $or: [{ username }, { email }]
+        });
+
+        // If user not found
+        if (!user) {
+            return res.status(404).json({
+                message: "Invalid credentials. Please check your username or email."
+            });
+        }
+
+        // Validate password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({
+                message: "Invalid credentials."
+            });
+        }
+
+        // Generate token
+        const token = jwt.sign(
+            { id: user._id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: "2h" }
+        );
+
+        // Send response
+        res.status(200).json({
+            token,
+            user: {
+                id: user._id,
+                username: user.username,
+                role: user.role
+            }
+        });
+    } catch (err) {
+        res.status(500).json({
+            message: "Server error. Please try again later."
+        });
+    }
+};
+
+
+module.exports = {
+    register,
+    login,
+}
+```
+
+ - Make a Routes folder and inside that make a authRoute folder and inside that make a authRoute.js file.
+ ```js
+const express = require('express');
+const router = express.Router();
+const {register, login} = require("../Controllers/authController")
+
+
+
+router.post('/register', register);
+router.post('/login', login);
+
+module.exports = router;
+
+
+ ```
+- Create a userModel.js file for the login and register model.
+```js
+//usermodel.js
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+  username: { 
+    type: String, 
+    required: true 
+},
+  email: { 
+    type: String, 
+    required: true, 
+    unique: true 
+},
+  password: { 
+    type: String, 
+    required: true 
+},
+  role: { 
+    type: String, 
+    required : true,
+    enum: ['user', 'admin'], 
+    default: 'user' 
+},
+}, 
+{ 
+    timestamps: true 
+});
+
+module.exports = mongoose.model('User', userSchema);
+```
+
+- and then import the route in app.js
+```js
+
+//Routes::
+const authRoute = require("./Routes/authRoute")
+app.use("/api/auth", authRoute)
+
+```

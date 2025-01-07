@@ -10,8 +10,8 @@ const connectionString = process.env.MONGO_URI;
 // It is an asynchronous task, so use async/await.
 async function connectToDatabase() {
     try {
-        await mongoose.connect(connectionString);
-        console.log("Connected to database successfully.");
+        const connection = await mongoose.connect(connectionString);
+        console.log(`Connected to database successfully. ${connection.connection.host}, ${connection.connection.name}`);
     } catch (error) {
         console.error("Failed to connect to database:", error);
         process.exit(1); // Exit the process with failure
