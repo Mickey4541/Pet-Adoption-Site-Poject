@@ -282,6 +282,7 @@ app.post('/animal', upload.single("animalImage"), async (req, res) => {
   # Email validator:
  - npm install validator
 
+- Now our authcontroller.js file looks like this:
 ```js
 //authcontroller.js
 
@@ -429,3 +430,153 @@ const authRoute = require("./Routes/authRoute")
 app.use("/api/auth", authRoute)
 
 ```
+
+- Now make a userRoute.js file inside Routes folder to make route of admin and user.
+```js
+//userRoute.js
+const express = require("express")
+const router = express.Router()
+
+//Only admin can access this router:::
+router.get("/admin", (req, res) => {
+    res.status(200).json({
+        message : "Welcome Admin"
+    })
+})
+
+// Only user can access this router:::
+router.get("/user", (req, res) => {
+    res.status(200).json({
+        message : "Welcome user"
+    })
+})
+
+module.exports = router
+```
+
+> Now we have to make a route of user and admin protected. In order to do a protected route, we need to do is, we will only allow if a user is authenticated, than only you can access these route, and how we are going to authenticate user is we can authenticate user based on the access token.
+- So, make a authmiddleware.js file inside Middleware folder. It will just intercept the request and then it will check the token and see that if the user is authenticated, then only it will allow the user to access those route.
+```js
+//authmiddleware.js
+
+const jwt = require("jsonwebtoken")
+
+
+const verifyToken = (req, res, next) => {
+    let token;
+
+    //if we want to make any route(in our case is userRoute.js) protected, we need to pass the access token in the header
+    let authHeader = req.headers.Authorization || req.headers.authorization
+    if(authHeader && authHeader.startsWith("Bearer")){
+        token = authHeader.split(" ")[1];
+
+        if(!token){
+            return res.status(401).json({
+                message: "No Token, Authorization Denied !!!"
+            });
+        }
+        // if we get the token , we need to decode that token, to decode, we have jwt.verify.
+        try {
+            const decode = jwt.verify(token, process.env.JWT_SECRET)
+            req.user = decode;
+            console.log("The decoded user is", req.user);
+            next();
+            
+        } catch (error) {
+            res.status(400).json({
+                message : "Token is Invalid !!!"
+            })
+        }
+    }else{
+        return res.status(401).json({
+            message: "No Token, Authorization Denied !!!"
+        });
+    }
+        
+};
+module.exports = verifyToken;
+```
+- Now we have to import the authmiddleware in the userRoute.js file to protect it.
+```js
+//userRoutes.js
+const express = require("express")
+const router = express.Router()
+const verifyToken = require("../Middleware/authMiddleware")
+
+
+//Only admin can access this router:::
+router.get("/admin", verifyToken, (req, res) => {
+    res.status(200).json({
+        message : "Welcome Admin"
+    })
+})
+
+
+// Only user can access this router:::
+router.get("/user", verifyToken, (req, res) => {
+    res.status(200).json({
+        message : "Welcome user"
+    })
+})
+
+module.exports = router
+```
+- Till here, we have a protected route, Now we have to build a role based access control. If a user has a particular role, then we only allow the user to access that particular route. So, 
+
+- Create a roleMiddleware.js file inside Middleware folder.
+```js
+//First require it in userRoute.js
+const express = require("express")
+const router = express.Router()
+const verifyToken = require("../Middleware/authMiddleware")
+const authorizeRoles = require("../Middleware/roleMiddleware")
+
+//Only admin can access this router:::
+router.get("/admin", verifyToken, authorizeRoles("admin"), (req, res) => {
+    res.status(200).json({
+        message : "Welcome Admin"
+    })
+})
+
+
+
+
+// Only user can access this router:::
+//we can authorize like this: ("admin","user") both to user and admin.
+router.get("/user", verifyToken, authorizeRoles("admin","user"), (req, res) => {
+    res.status(200).json({
+        message : "Welcome user"
+    })
+})
+
+
+module.exports = router
+```
+- RoleMiddleware.js file look like this:
+```js
+//roleMiddleware.js
+const authorizeRoles = (...allowedRoles) => {
+    return (req, res, next) => {
+        console.log(req.user.role);
+        /*
+        The output of req.user.role while hitting the admin route is:
+        The decoded user is {
+        id: '677ce939fc6acb52c8793700', 
+        role: 'admin',
+        iat: 1736243929,
+        exp: 1736251129
+        }
+        admin        
+        */
+        if(!allowedRoles.includes(req.user.role)){
+            return res.status(403).json({
+                message : "Access Denied"
+            })
+        }
+        next();
+    }
+}
+
+module.exports = authorizeRoles;
+```
+- Till here, we have completed a role based access control and protected our routes by using access token.

@@ -45,8 +45,11 @@ app.use(cors({
 
 //Routes::
 const authRoute = require("./Routes/authRoute")
+//authroute
 app.use("/api/auth", authRoute)
-
+//userRoute
+const userRoutes = require("./Routes/userRoutes")
+app.use("/api/users", userRoutes)
 
 
 //success message from browser.
