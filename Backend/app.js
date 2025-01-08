@@ -62,39 +62,213 @@ app.get('/',(request,response) => {
 
 
 
-//create API
+
+
+
+
+//create Animal  API
+
 const Animal = require('./Model/animalModel');
-app.post('/animal', upload.single("animalImage"), async (req, res) => {
-    console.log(req.file);
-    
-    let fileName;
-    if (!req.file) {
-        fileName = "https://media.istockphoto.com/id/529239795/vector/no-image-signs-for-web-page.jpg?s=612x612&w=0&k=20&c=U3FvupU1VFGiIx5A2K8i79bm-L6bZyeSVUAt8THf_xs=";
-    } else {
-        fileName = "http://localhost:3000/storage/" + req.file.filename;
+const verifyToken = require("./Middleware/authMiddleware");
+const authorizeRoles = require("./Middleware/roleMiddleware");
+// Create Animal API
+app.post('/animal', verifyToken, authorizeRoles('admin'), upload.single("animalImage"), async (req, res) => {
+    try {
+        // Manual validation
+        const {
+            animalName, animalAge, animalSize, animalGender,
+            animalVaccinated, animalHealthStatus, animalLocation,
+            animalDescription, category
+        } = req.body;
+
+        if (!animalName || typeof animalName !== 'string') {
+            return res.status(400).json({ message: "Invalid or missing animal name" });
+        }
+        if (!animalAge || isNaN(animalAge) || !Number.isInteger(Number(animalAge))) {
+            return res.status(400).json({ message: "Invalid or missing animal age" });
+        }
+        if (!animalSize || !['Small', 'Medium', 'Large'].includes(animalSize)) {
+            return res.status(400).json({ message: "Invalid or missing animal size" });
+        }
+        if (!animalGender || !['Male', 'Female'].includes(animalGender)) {
+            return res.status(400).json({ message: "Invalid or missing animal gender" });
+        }
+        if (typeof animalVaccinated !== 'boolean' && animalVaccinated !== 'true' && animalVaccinated !== 'false') {
+            return res.status(400).json({ message: "Invalid or missing animal vaccination status" });
+        }
+        if (!animalHealthStatus || typeof animalHealthStatus !== 'string') {
+            return res.status(400).json({ message: "Invalid or missing animal health status" });
+        }
+        if (!animalLocation || typeof animalLocation !== 'string') {
+            return res.status(400).json({ message: "Invalid or missing animal location" });
+        }
+        if (!category || !['cat', 'dog', 'monkey', 'other'].includes(category)) {
+        return res.status(400).json({ message: "Invalid or missing animal category" });
+        }
+
+        // Default image if none is provided
+        const defaultImage = process.env.DEFAULT_ANIMAL_IMAGE || "https://media.istockphoto.com/id/529239795/vector/no-image-signs-for-web-page.jpg?s=612x612&w=0&k=20&c=U3FvupU1VFGiIx5A2K8i79bm-L6bZyeSVUAt8THf_xs=";
+        const fileName = req.file ? "http://localhost:3000/storage/" + req.file.filename : defaultImage;
+
+        const animal = await Animal.create({
+            animalName,
+            animalAge,
+            animalSize,
+            animalGender,
+            animalVaccinated,
+            animalHealthStatus,
+            animalLocation,
+            animalImage: fileName,
+            animalDescription,
+            category
+        });
+
+        res.status(201).json({
+            message: "Animal details created successfully",
+            animal,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Something went wrong", error: error.message });
     }
+});
 
-    const {
-        animalName, animalAge, animalSize, animalGender,
-        animalVaccinated, animalHealthStatus, animalLocation,
-        animalDescription
-    } = req.body;
 
-    await Animal.create({
-        animalName,
-        animalAge,
-        animalSize, 
-        animalGender,
-        animalVaccinated, 
-        animalHealthStatus, 
-        animalLocation, 
-        animalImage: fileName, 
-        animalDescription
-    });
 
-    res.status(201).json({
-        message: "Animal details created successfully"
-    });
+
+
+
+
+
+
+//all read or get all animal api
+
+// GET /animals (Fetch all animals or filter by category)
+app.get('/animals', async (req, res) => {
+    const { category } = req.query;  // Category filter passed in query parameters
+    
+    //hamro valid categories haru
+    const validCategories = ['cats', 'dogs', 'monkeys', 'others'];
+
+    try {
+        let animals;
+        
+        if (category) {
+            //category lai valid garni
+            if (!validCategories.includes(category)) {
+                return res.status(400).json({
+                    message: "Invalid category",
+                    validCategories: validCategories
+                });
+            }
+
+            // If category is valid, filter by category
+            animals = await Animal.find({ 
+                category: category 
+            });
+        } else {
+            // Fetch all animals if category is not provided
+            animals = await Animal.find();
+        }
+
+        res.status(200).json({
+            message: "Animals fetched successfully",
+            data: animals
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Error fetching animals",
+            error: error.message
+        });
+    }
+});
+
+
+
+
+
+///single read API:::Fetch a specific animal by ID
+app.get("/animal/:id", async (req, res) => {// here :id is dynamic but only id is static.
+    try {
+        //console.log(req.params.id); //body maa aako xa vani req.body garda vayo tara url bata aai rako xa ni ta parameter vayera id, tei vayera req.params.id gareko.
+
+        const { id } = req.params;  //destructure garera specific animal ko id aayo aba.
+        
+        // Find the animal by its ID using Mongoose's findById method
+        const animal = await Animal.findById(id); //hamisanga id ta aayo aba Book maa find by id garnu paryo. And findbyId returns object.
+        
+        if (!animal) {
+            return res.status(404).json({
+                message: "Animal not found"
+            });
+        }
+
+        // If animal is found, return it in the response
+        res.status(200).json({
+            message: "Animal fetched successfully",
+            data: animal
+        });
+
+    } catch (error) {
+        console.error(error);
+        // Handle any potential errors
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
+});
+
+
+
+
+
+
+///delete animal api:
+const fs = require('fs');
+
+app.delete("/animal/:id", verifyToken, authorizeRoles('admin'), async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Find the animal by ID
+        const animal = await Animal.findById(id);
+        if (!animal) {
+            return res.status(404).json({ message: "Animal not found" });
+        }
+
+        // Retrieve the image URL of the animal
+        const oldImageUrl = animal.animalImage; //`animalImage` holds the URL of the image
+
+        // Extract the filename from the URL
+        const imageFilename = oldImageUrl.split('/storage/')[1]; // This gets the filename from the URL
+        const imagePath = path.join(__dirname, 'storage', imageFilename); // Get the local file path
+
+        // Check if the image exists locally and delete the image file
+        fs.unlink(imagePath, (err) => {
+            if (err) {
+                console.log("Error deleting image file: ", err);
+            } else {
+                console.log("Image file deleted successfully.");
+            }
+        });
+
+        // Delete the animal from the database
+        await Animal.findByIdAndDelete(id);
+
+        // Return success response
+        res.status(200).json({
+            message: "Animal and associated image deleted successfully"
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
 });
 
 
@@ -108,10 +282,90 @@ app.post('/animal', upload.single("animalImage"), async (req, res) => {
 
 
 
+app.patch("/animal/:id", verifyToken, authorizeRoles('admin'), upload.single("animalImage"), async (req, res) => {
+    const id = req.params.id;  // The ID of the animal to update
+    const {
+        animalName,
+        animalAge,
+        animalSize,
+        animalGender,
+        animalVaccinated,
+        animalHealthStatus,
+        animalLocation,
+        animalDescription,
+        category
+    } = req.body;  // The updated text fields from the body
 
+    try {
+        // Find the existing animal record by ID
+        const oldAnimal = await Animal.findById(id);
+        if (!oldAnimal) {
+            return res.status(404).json({ message: "Animal not found" });
+        }
 
+        // Track the old image and delete it if there's a new image
+        let fileName;
+        if (req.file) {
+            // Check if there is an old image before trying to delete it
+            const oldImagePath = oldAnimal.animalImage; // Access the animalImage field
 
+            if (oldImagePath) {
+                const localHostUrlLength = "http://localhost:3000/".length;  // Adjust this base URL length
+                const oldFileName = oldImagePath.slice(localHostUrlLength); // Extract the relative file name
+                const oldFilePath = `Storage/${oldFileName}`;  // Use 'Storage' instead of 'storage'
 
+                // Log the old image path and file path
+                console.log('Old Image Path:', oldImagePath);
+                console.log('Old File Path:', oldFilePath);
+
+                // Check if the file exists before deleting
+                fs.access(oldFilePath, fs.constants.F_OK, (err) => {
+                    if (err) {
+                        console.log("Old image file does not exist:", oldFilePath);
+                    } else {
+                        fs.unlink(oldFilePath, (err) => {
+                            if (err) {
+                                console.log("Error deleting old image:", err);
+                            } else {
+                                console.log("Old image deleted successfully:", oldFilePath);
+                            }
+                        });
+                    }
+                });
+            }
+
+            // Set the new file URL
+            fileName = "http://localhost:3000/" + req.file.filename;  // Updated URL for new image
+        } else {
+            // If no new image, retain the old image URL
+            fileName = oldAnimal.animalImage;
+        }
+
+        // Update the animal record with new data
+        await Animal.findByIdAndUpdate(id, {
+            animalName,
+            animalAge,
+            animalSize,
+            animalGender,
+            animalVaccinated,
+            animalHealthStatus,
+            animalLocation,
+            animalImage: fileName,  // Updated image or the same if no new image
+            animalDescription,
+            category
+        });
+
+        res.status(200).json({
+            message: "Animal updated successfully"
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Error updating the animal"
+        });
+    }
+});
 
 
 
@@ -136,3 +390,4 @@ const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
     console.log(`Node.js server has started at port ${PORT}`)
 })
+
