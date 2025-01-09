@@ -61,6 +61,8 @@ app.get('/',(request,response) => {
 })
 
 
+const adopterRoutes = require("./Routes/adopterRoute");  // Import your adopter routes
+app.use("/api/adopt", adopterRoutes);  // Adoption-related routes
 
 
 
