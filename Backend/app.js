@@ -78,7 +78,7 @@ app.post('/animal', verifyToken, authorizeRoles('admin'), upload.single("animalI
         const {
             animalName, animalAge, animalSize, animalGender,
             animalVaccinated, animalHealthStatus, animalLocation,
-            animalDescription, category
+            animalDescription, category, status
         } = req.body;
 
         if (!animalName || typeof animalName !== 'string') {
@@ -105,6 +105,10 @@ app.post('/animal', verifyToken, authorizeRoles('admin'), upload.single("animalI
         if (!category || !['cat', 'dog', 'monkey', 'other'].includes(category)) {
         return res.status(400).json({ message: "Invalid or missing animal category" });
         }
+        if (!status || !['Available for adoption', 'Already adopted'].includes(status)) {
+            return res.status(400).json({ message: "Invalid or missing animal status" });
+        }
+        
 
         // Default image if none is provided
         const defaultImage = process.env.DEFAULT_ANIMAL_IMAGE || "https://media.istockphoto.com/id/529239795/vector/no-image-signs-for-web-page.jpg?s=612x612&w=0&k=20&c=U3FvupU1VFGiIx5A2K8i79bm-L6bZyeSVUAt8THf_xs=";
@@ -120,7 +124,8 @@ app.post('/animal', verifyToken, authorizeRoles('admin'), upload.single("animalI
             animalLocation,
             animalImage: fileName,
             animalDescription,
-            category
+            category,
+            status
         });
 
         res.status(201).json({
@@ -222,10 +227,6 @@ app.get("/animal/:id", async (req, res) => {// here :id is dynamic but only id i
 
 
 
-
-
-
-///delete animal api:
 const fs = require('fs');
 
 app.delete("/animal/:id", verifyToken, authorizeRoles('admin'), async (req, res) => {
@@ -239,16 +240,26 @@ app.delete("/animal/:id", verifyToken, authorizeRoles('admin'), async (req, res)
         }
 
         // Retrieve the image URL of the animal
-        const oldImageUrl = animal.animalImage; //`animalImage` holds the URL of the image
+        const oldImageUrl = animal.animalImage; // `animalImage` holds the URL of the image
+        console.log("Old Image URL:", oldImageUrl);  // Log the old image URL for debugging
 
-        // Extract the filename from the URL
-        const imageFilename = oldImageUrl.split('/storage/')[1]; // This gets the filename from the URL
-        const imagePath = path.join(__dirname, 'storage', imageFilename); // Get the local file path
+        // Extract the filename from the URL (use the part after the last '/')
+        const imageFilename = oldImageUrl.split('/').pop();  // .pop() gets the last part of the URL
+        console.log("Extracted Image Filename:", imageFilename);  // Log the extracted filename for debugging
+
+        // If no image filename is found, return an error
+        if (!imageFilename) {
+            return res.status(400).json({ message: "Image filename not found" });
+        }
+
+        const imagePath = path.join(__dirname, 'Storage', imageFilename); // Corrected path to 'Storage' folder
+        console.log("Image Path:", imagePath);  // Log the full image path for debugging
 
         // Check if the image exists locally and delete the image file
         fs.unlink(imagePath, (err) => {
             if (err) {
                 console.log("Error deleting image file: ", err);
+                return res.status(500).json({ message: "Error deleting image file" });
             } else {
                 console.log("Image file deleted successfully.");
             }
@@ -281,7 +292,6 @@ app.delete("/animal/:id", verifyToken, authorizeRoles('admin'), async (req, res)
 
 
 
-
 app.patch("/animal/:id", verifyToken, authorizeRoles('admin'), upload.single("animalImage"), async (req, res) => {
     const id = req.params.id;  // The ID of the animal to update
     const {
@@ -293,8 +303,41 @@ app.patch("/animal/:id", verifyToken, authorizeRoles('admin'), upload.single("an
         animalHealthStatus,
         animalLocation,
         animalDescription,
-        category
+        category,
+        status
     } = req.body;  // The updated text fields from the body
+
+
+    if (!animalName || typeof animalName !== 'string') {
+                return res.status(400).json({ message: "Invalid or missing animal name" });
+            }
+            if (!animalAge || isNaN(animalAge) || !Number.isInteger(Number(animalAge))) {
+                return res.status(400).json({ message: "Invalid or missing animal age" });
+            }
+            if (!animalSize || !['Small', 'Medium', 'Large'].includes(animalSize)) {
+                return res.status(400).json({ message: "Invalid or missing animal size" });
+            }
+            if (!animalGender || !['Male', 'Female'].includes(animalGender)) {
+                return res.status(400).json({ message: "Invalid or missing animal gender" });
+            }
+            if (typeof animalVaccinated !== 'boolean' && animalVaccinated !== 'true' && animalVaccinated !== 'false') {
+                return res.status(400).json({ message: "Invalid or missing animal vaccination status" });
+            }
+            if (!animalHealthStatus || typeof animalHealthStatus !== 'string') {
+                return res.status(400).json({ message: "Invalid or missing animal health status" });
+            }
+            if (!animalLocation || typeof animalLocation !== 'string') {
+                return res.status(400).json({ message: "Invalid or missing animal location" });
+            }
+            if (!category || !['cat', 'dog', 'monkey', 'other'].includes(category)) {
+            return res.status(400).json({ message: "Invalid or missing animal category" });
+            }
+            if (!status || !['Available for adoption', 'Already adopted'].includes(status)) {
+                return res.status(400).json({ message: "Invalid or missing animal status" });
+            }
+
+
+
 
     try {
         // Find the existing animal record by ID
@@ -352,7 +395,8 @@ app.patch("/animal/:id", verifyToken, authorizeRoles('admin'), upload.single("an
             animalLocation,
             animalImage: fileName,  // Updated image or the same if no new image
             animalDescription,
-            category
+            category,
+            status
         });
 
         res.status(200).json({

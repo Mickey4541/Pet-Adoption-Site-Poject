@@ -36,6 +36,11 @@ const animalSchema = new mongoose.Schema({
         enum: ['cat', 'dog', 'monkey', 'other'], // You can add more categories here
         required: true,
     },
+    status: {
+        type: String,
+        enum: ["Available for adoption", "Already adopted"], // Only these two statuses
+        default: "Available for adoption", // Default value
+      },
 });
 
 const Animal = mongoose.model('Animal', animalSchema)// model is like a table of sql in mongodb, here we are telling that make a animal table/Model and the columns/fields inside it are animalschema. yaha hamile animal model banako xam, collection maa chai animals banxa name.
