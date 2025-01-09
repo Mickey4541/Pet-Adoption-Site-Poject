@@ -580,3 +580,7 @@ const authorizeRoles = (...allowedRoles) => {
 module.exports = authorizeRoles;
 ```
 - Till here, we have completed a role based access control and protected our routes by using access token.
+
+
+# now do CRUD of animal and add adopterroute and adoptermodel.js for storing the details of adopter who adopt the animal.
+
