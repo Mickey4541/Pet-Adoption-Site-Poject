@@ -11,7 +11,8 @@ const Register = ({ onClose }) => {
     role: "user", // Default role for registration
   });
 
-  const [isLogin, setIsLogin] = useState(false); // State to track whether it's login or register form
+  // State to track whether it's login or register form
+  const [isLogin, setIsLogin] = useState(false); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,9 +22,9 @@ const Register = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const apiUrl = isLogin
-    ? "http://localhost:3000/api/auth/login" // Replace with your login API URL
-    : "http://localhost:3000/api/auth/register"; // Replace with your register API URL
-
+    ? "http://localhost:3000/api/auth/login" 
+    : "http://localhost:3000/api/auth/register"; 
+    
   const requestBody = isLogin
     ? {
         username : formData.username,
