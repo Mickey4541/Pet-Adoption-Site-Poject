@@ -1,21 +1,21 @@
 const express = require("express");
-const Adoption = require("../Model/AdopterModel"); // Your Adoption model
+const Adoption = require("../Model/AdopterModel");
 const Animal = require("../Model/animalModel");
 
 const router = express.Router();
 
-// POST route to handle pet adoption
+// POST route
 router.post("/adopt", async (req, res) => {
   const { petId, adopterName, adopterContact, adopterAddress, adopterEmail } = req.body;
 
   try {
-    // Check if the pet exists
+    // pet animal xa ki xaina check garnu paryo aba
     const pet = await Animal.findById(petId);
     if (!pet) {
       return res.status(400).json({ success: false, message: "Pet not found." });
     }
 
-    // Check if the pet is still available for adoption
+    // pet ajhai available xa ki nai adoption ko lagi check garnu paryo
     if (pet.status !== "Available for adoption") {
       return res.status(400).json({ success: false, message: "This pet has already been adopted." });
     }
