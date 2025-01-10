@@ -1,21 +1,39 @@
-
-import React from 'react'
-import Navbar from "./Components/Navbar/Navbar";
-import HeroSection from './Components/HeroSection/HeroSection';
-import Footer from './Components/Footer/Footer';
-import HowToAdoptSection from './Components/HowToAdoptSection/HowToAdoptSection';
-import AdoptAPetSection from './Components/AdoptAPetSection.jsx/AdoptAPetSection';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Homepage from './Pages/Homepage';
+import Register from './Components/Register/Register';
 
 const App = () => {
-  return (
-    <>
-    <Navbar/>
-    <HeroSection/>
-    <HowToAdoptSection/>
-    <AdoptAPetSection/>
-    <Footer/>
-    </>
-  )
-}
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-export default App
+  // Function to open the modal
+  const openRegisterModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeRegisterModal = () => {
+    setIsModalOpen(false);
+  };
+
+  return (
+    <Router>
+      <Routes>
+        {/* Homepage Route */}
+        <Route path="/" element={<Homepage openModal={openRegisterModal} />} />
+        
+        {/* Register Route */}
+        <Route
+          path="/register"
+          element={<Register onClose={closeRegisterModal} />}
+        />
+        
+      </Routes>
+
+       {/* model pahile nai open xa vani register maa close model pass gareko ani onclose jaha xa tyo open model lai close garna use vayo*/}
+      {isModalOpen && <Register onClose={closeRegisterModal} />}
+    </Router>
+  );
+};
+
+export default App;
