@@ -136,13 +136,13 @@ const Navbar = () => {
         <ul className="flex flex-col h-auto items-center space-y-1 text-[25px] font-[Oswald]">
           <li
             className="cursor-pointer hover:text-gray-500"
-            onClick={closeDropdown} // Close menu on click
+            
           >
             Home
           </li>
           <li
             className="cursor-pointer hover:text-gray-500"
-            onClick={closeDropdown} // Close menu on click
+           
           >
             Pets
           </li>
@@ -156,25 +156,25 @@ const Navbar = () => {
                 <ul className="space-y-4 px-6">
                   <li
                     className="cursor-pointer hover:text-gray-500"
-                    onClick={closeDropdown} // Close menu on click
+                    
                   >
                     Cats
                   </li>
                   <li
                     className="cursor-pointer hover:text-gray-500"
-                    onClick={closeDropdown} // Close menu on click
+                    
                   >
                     Dogs
                   </li>
                   <li
                     className="cursor-pointer hover:text-gray-500"
-                    onClick={closeDropdown} // Close menu on click
+                    
                   >
                     Birds
                   </li>
                   <li
                     className="cursor-pointer hover:text-gray-500"
-                    onClick={closeDropdown} // Close menu on click
+                   
                   >
                     Others
                   </li>
@@ -184,7 +184,7 @@ const Navbar = () => {
           </li>
           <li
             className="cursor-pointer hover:text-gray-500"
-            onClick={closeDropdown} // Close menu on click
+             // Close menu on click
           >
             About us
           </li>
@@ -194,7 +194,7 @@ const Navbar = () => {
         <div className="mt-4 flex justify-center mb-4">
           <button
             className="px-12 py-3 bg-green-600 text-white font-semibold text-[20px] rounded-full hover:bg-pink-500 transition duration-300 font-[Oswald]"
-            onClick={closeDropdown} // Close menu on click
+             // Close menu on click
           >
             Register
           </button>
