@@ -44,7 +44,7 @@ const HowToAdoptSection = () => {
         <Link
           to="/contact"
           className="px-4 py-2 w-auto flex items-center justify-center bg-pink-500 text-white border-2 border-white rounded-full shadow-md hover:bg-green-600 transition text-sm sm:text-base font-[Oswald]"
-        >Contact us
+        >Adopt Now
         </Link>
       </div>
     </div>
