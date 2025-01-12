@@ -1,7 +1,6 @@
 const express = require("express");
-const Adoption = require("../Model/AdopterModel");
-const Animal = require("../Model/animalModel");
-
+const Animal = require("../../Model/animalModel");
+const Adoption = require('../../Model/AdopterModel')
 const router = express.Router();
 
 // POST route

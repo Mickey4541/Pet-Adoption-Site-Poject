@@ -1,6 +1,6 @@
 
 
-const authorizeRoles = (...allowedRoles) => {
+const restricTo = (...allowedRoles) => {
     return (req, res, next) => {
         console.log(req.user.role);
         /*
@@ -23,4 +23,4 @@ const authorizeRoles = (...allowedRoles) => {
     }
 }
 
-module.exports = authorizeRoles;
+module.exports = restricTo;

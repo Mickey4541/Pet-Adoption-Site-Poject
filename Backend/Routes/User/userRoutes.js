@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
-const verifyToken = require("../Middleware/authMiddleware")
-const authorizeRoles = require("../Middleware/roleMiddleware")
+const verifyToken = require("../../Middleware/isAuthenticated")
+const authorizeRoles = require("../../Middleware/restrictTo")
 
 //Only admin can access this router:::
 router.get("/admin", verifyToken, authorizeRoles("admin"), (req, res) => {
