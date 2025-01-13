@@ -17,9 +17,10 @@ const HeroSectionLeftSide = () => {
       </p>
       <p className="mt-6 text-sm sm:text-base lg:text-gray-400 leading-6 lg:leading-7">
         {" "}
-        <p className='font-bold text-[Oswald] text-pink-500 text-[20px]'>"Dogs show unconditional love and loyalty, always ready to brighten your day with a wagging tail. Cats, with their soothing purrs and gentle cuddles, bring comfort and warmth to every moment. 🐶💖🐱"</p>
+        
         <span className="text-yellow-300 font-bold"></span>
       </p>
+      <p className='font-bold text-[Oswald] text-pink-500 text-[20px]'>"Dogs show unconditional love and loyalty, always ready to brighten your day with a wagging tail. Cats, with their soothing purrs and gentle cuddles, bring comfort and warmth to every moment. 🐶💖🐱"</p>
       <p className="mt-4 text-base font-semibold">
         Do you have a interesting Story about your pet?
       </p>

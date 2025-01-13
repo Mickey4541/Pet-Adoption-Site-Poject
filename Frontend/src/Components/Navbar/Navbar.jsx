@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import searchIconLight from "../../assets/search-w.png";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ openModal }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,12 +59,16 @@ const Navbar = ({ openModal }) => {
         </div>
 
         <ul className="hidden lg:flex flex-1 justify-center space-x-8 list-none text-sm sm:text-lg">
-          <li className="cursor-pointer hover:text-red-500 font-[Oswald] font-bold text-[30px]">
-            Home
-          </li>
-          <li className="cursor-pointer hover:text-red-500 font-[Oswald] font-bold text-[30px]">
-            Pets
-          </li>
+          <Link to="/">
+            <li className="cursor-pointer hover:text-red-500 font-[Oswald] font-bold text-[30px]">
+              Home
+            </li>
+          </Link>
+          <Link to="/animals">
+            <li className="cursor-pointer hover:text-red-500 font-[Oswald] font-bold text-[30px]">
+              Pets
+            </li>
+          </Link>
           <li
             className="relative cursor-pointer font-[Oswald] font-bold text-[30px] categories-dropdown hover:text-red-500"
             onClick={toggleCategories}
@@ -72,41 +77,50 @@ const Navbar = ({ openModal }) => {
             {isCategoriesOpen && (
               <div className="absolute top-full left-0 w-full border bg-pink-50 shadow-lg py-8 mt-4 border-1 border-black z-50 rounded-2xl animate-fade-in-down">
                 <ul className="flex flex-col items-center space-y-2 text-lg font-medium">
-                  <li className="cursor-pointer hover:bg-pink-200 w-full text-center py-2 border-b-2 hover:text-green-500">
-                    Cats
-                  </li>
-                  <li className="cursor-pointer hover:bg-pink-200 w-full text-center py-2 border-b-2 hover:text-green-500">
-                    Dogs
-                  </li>
-                  <li className="cursor-pointer hover:bg-pink-200 w-full text-center py-2 border-b-2 hover:text-green-500">
-                    Birds
-                  </li>
-                  <li className="cursor-pointer hover:bg-pink-200 w-full text-center py-2 border-b-2 hover:text-green-500">
-                    Others
-                  </li>
+                  <Link to="/category/cats">
+                    <li className="cursor-pointer hover:bg-pink-200 w-full text-center py-2 border-b-2 hover:text-green-500">
+                      Cats
+                    </li>
+                  </Link>
+                  <Link to="/category/dogs">
+                    <li className="cursor-pointer hover:bg-pink-200 w-full text-center py-2 border-b-2 hover:text-green-500">
+                      Dogs
+                    </li>
+                  </Link>
+                  <Link to="/category/birds">
+                    <li className="cursor-pointer hover:bg-pink-200 w-full text-center py-2 border-b-2 hover:text-green-500">
+                      Birds
+                    </li>
+                  </Link>
+                  <Link to="/category/others">
+                    <li className="cursor-pointer hover:bg-pink-200 w-full text-center py-2 border-b-2 hover:text-green-500">
+                      Others
+                    </li>
+                  </Link>
                 </ul>
               </div>
             )}
           </li>
-          <li className="cursor-pointer hover:text-red-500 font-[Oswald] font-bold text-[30px]">
-            About us
-          </li>
+          <Link to="/aboutus">
+            <li className="cursor-pointer hover:text-red-500 font-[Oswald] font-bold text-[30px]">
+              About us
+            </li>
+          </Link>
         </ul>
 
-        {/* Hamburger Icon for Mobile */}
         <div className="lg:hidden cursor-pointer" onClick={toggleMenu}>
           <div className="w-8 h-1 bg-pink-800 mb-1"></div>
           <div className="w-8 h-1 bg-pink-800 mb-1"></div>
           <div className="w-8 h-1 bg-pink-800"></div>
         </div>
 
-        {/* Register Button */}
-        <button
-          onClick={openModal} // Open modal when clicked
-          className="hidden lg:block px-8 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-pink-500 transition duration-300 text-[20px]"
-        >
-          Register
-        </button>
+        <Link to="/register">
+          <button
+            className="hidden lg:block px-8 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-pink-500 transition duration-300 text-[20px]"
+          >
+            Register
+          </button>
+        </Link>
       </div>
 
       <div
@@ -127,35 +141,46 @@ const Navbar = ({ openModal }) => {
         </div>
 
         <ul className="flex flex-col h-auto items-center space-y-1 text-[25px] font-[Oswald]">
-          <li className="cursor-pointer hover:text-gray-500">Home</li>
-          <li className="cursor-pointer hover:text-gray-500">Pets</li>
-          <li
-            className="cursor-pointer hover:text-gray-500"
-            onClick={toggleCategories}
-          >
+          <Link to="/">
+            <li className="cursor-pointer hover:text-gray-500">Home</li>
+          </Link>
+          <Link to="/animals">
+            <li className="cursor-pointer hover:text-gray-500">Pets</li>
+          </Link>
+          <li className="cursor-pointer hover:text-gray-500" onClick={toggleCategories}>
             Categories
             {isCategoriesOpen && (
               <div className="mt-4 w-full h-auto py-4">
                 <ul className="space-y-4 px-6">
-                  <li className="cursor-pointer hover:text-gray-500">Cats</li>
-                  <li className="cursor-pointer hover:text-gray-500">Dogs</li>
-                  <li className="cursor-pointer hover:text-gray-500">Birds</li>
-                  <li className="cursor-pointer hover:text-gray-500">Others</li>
+                  <Link to="/category/cats">
+                    <li className="cursor-pointer hover:text-gray-500">Cats</li>
+                  </Link>
+                  <Link to="/category/dogs">
+                    <li className="cursor-pointer hover:text-gray-500">Dogs</li>
+                  </Link>
+                  <Link to="/category/birds">
+                    <li className="cursor-pointer hover:text-gray-500">Birds</li>
+                  </Link>
+                  <Link to="/category/others">
+                    <li className="cursor-pointer hover:text-gray-500">Others</li>
+                  </Link>
                 </ul>
               </div>
             )}
           </li>
-          <li className="cursor-pointer hover:text-gray-500">About us</li>
+          <Link to="/aboutus">
+            <li className="cursor-pointer hover:text-gray-500">About us</li>
+          </Link>
         </ul>
 
-        {/* Register Button */}
         <div className="mt-4 flex justify-center mb-4">
-          <button
-            onClick={openModal} // Open modal when clicked
-            className="px-12 py-3 bg-green-600 text-white font-semibold text-[20px] rounded-full hover:bg-pink-500 transition duration-300 font-[Oswald]"
-          >
-            Register
-          </button>
+          <Link to="/register">
+            <button
+              className="px-12 py-3 bg-green-600 text-white font-semibold text-[20px] rounded-full hover:bg-pink-500 transition duration-300 font-[Oswald]"
+            >
+              Register
+            </button>
+          </Link>
         </div>
       </div>
     </div>
