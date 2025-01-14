@@ -13,6 +13,7 @@ import ContactUs from './Pages/ContactUsPage/ContactUs';
 import PrivacyPolicy from './Pages/PrivacyPolicy/PrivacyPolicy';
 import TermsAndCondition from './Pages/TermsAndCondition/TermsAndCondition';
 import AboutDeveloper from './Pages/AboutDeveloper/AboutDeveloper';
+import AdoptNowFormPage from './Pages/AdoptNowFormPage/AdoptNowFormPage';
 
 const App = () => {
 
@@ -59,6 +60,9 @@ const App = () => {
         <Route path='/privacypolicy' element={<PrivacyPolicy/>}/>
         <Route path='/tac' element={<TermsAndCondition/>}/>
         <Route path='/aboutDeveloper' element={<AboutDeveloper/>}/>
+
+
+        <Route path='/adopt' element={<AdoptNowFormPage/>}/>
       </Routes>
 
        {/* model pahile nai open xa vani register maa close model pass gareko ani onclose jaha xa tyo open model lai close garna use vayo*/}

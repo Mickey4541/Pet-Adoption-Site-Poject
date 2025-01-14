@@ -8,7 +8,7 @@ const Catspage = () => {
 
   const Cats = [
     {
-      animalName: "Mittens",
+      animalName: "haha cat",
       animalAge: "2 years",
       animalSize: "Small",
       animalGender: "Female",
@@ -16,14 +16,14 @@ const Catspage = () => {
       animalHealthStatus: "Healthy",
       animalLocation: "California",
       animalImage:
-        "https://cdn.pixabay.com/photo/2016/11/18/11/36/cat-1833831_1280.jpg",
+        "https://t4.ftcdn.net/jpg/06/45/27/81/360_F_645278147_orAd7BZzFeVzJu1hr14wHj7FPxHmQoMw.jpg",
       animalDescription:
         "Mittens is a playful cat who enjoys cuddling and chasing toys around the house.",
       category: "Cat",
       status: "Available for Adoption",
     },
     {
-      animalName: "Whiskers",
+      animalName: "hehe cat",
       animalAge: "3 years",
       animalSize: "Medium",
       animalGender: "Male",
@@ -31,14 +31,14 @@ const Catspage = () => {
       animalHealthStatus: "Healthy",
       animalLocation: "Texas",
       animalImage:
-        "https://cdn.pixabay.com/photo/2017/09/10/02/42/cat-2730645_1280.jpg",
+        "https://plus.unsplash.com/premium_photo-1677545182425-4fb12bdb9faf?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZnVubnklMjBjYXRzfGVufDB8fDB8fHww",
       animalDescription:
         "Whiskers is a curious and affectionate cat who loves to explore and nap in sunny spots.",
       category: "Cat",
       status: "Available for Adoption",
     },
     {
-      animalName: "Shadow",
+      animalName: "huhu cat",
       animalAge: "5 years",
       animalSize: "Large",
       animalGender: "Male",
@@ -46,14 +46,14 @@ const Catspage = () => {
       animalHealthStatus: "Healthy",
       animalLocation: "Florida",
       animalImage:
-        "https://cdn.pixabay.com/photo/2015/10/05/22/37/cat-975348_1280.jpg",
+        "https://media.istockphoto.com/id/1188445864/photo/closeup-portrait-of-funny-ginger-cat-wearing-sunglasses-isolated-on-light-cyan-copyspace.jpg?s=612x612&w=0&k=20&c=LHy_WCxNUEdejVx2sKK3Hq_dAQ_yyNRxspDxiDLUymg=",
       animalDescription:
         "Shadow is a calm and laid-back cat who enjoys lounging and occasionally playing with toys.",
       category: "Cat",
       status: "Adopted",
     },
     {
-      animalName: "Luna",
+      animalName: "hait cat",
       animalAge: "1 year",
       animalSize: "Small",
       animalGender: "Female",
@@ -61,7 +61,7 @@ const Catspage = () => {
       animalHealthStatus: "Healthy",
       animalLocation: "New York",
       animalImage:
-        "https://cdn.pixabay.com/photo/2017/08/30/06/37/cat-2690151_1280.jpg",
+        "https://media.istockphoto.com/id/1361306507/photo/funny-cat-looking-shocked-with-mouth-open.jpg?s=612x612&w=0&k=20&c=nZC2BlXoiC2tycIsiv_PvmUSwKhctikzVLy4Y3pgp10=",
       animalDescription:
         "Luna is an energetic kitten who loves to explore and be the center of attention.",
       category: "Cat",

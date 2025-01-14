@@ -82,9 +82,13 @@ const Login = ({ onClose }) => {
             </button>
           </div>
         </form>
-        <Link to='/register'>
-      <button>Register</button>
-      </Link>
+        <p className="text-center font-[Oswald] text-xl text-white">Don't have Account?</p>
+                  <Link to='/register'>
+                  
+                  <div className="flex items-center">
+                  <button className="text-center bg-blue-800 m-auto p-2 rounded-full px-6 text-white font-[Oswald]">Register</button>
+                  </div>
+                  </Link>
       </div>
       
     </div>

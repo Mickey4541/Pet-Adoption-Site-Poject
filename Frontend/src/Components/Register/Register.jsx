@@ -96,10 +96,14 @@ const Register = ({ onClose }) => {
               Register
             </button>
           </div>
+          <p className="text-center font-[Oswald] text-xl text-white">Already have Account ?</p>
           <Link to='/login'>
           
-          <button>Login</button>
+          <div className="flex items-center">
+          <button className="text-center bg-blue-800 m-auto p-2 rounded-full px-6 text-white font-[Oswald]">Login</button>
+          </div>
           </Link>
+            
         </form>
       </div>
     </div>

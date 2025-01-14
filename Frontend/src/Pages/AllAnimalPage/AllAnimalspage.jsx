@@ -217,7 +217,7 @@ const AllAnimalspage = () => {
                   <div className="flex items-center justify-center mt-4">
                     <Link to="/adopt">
                       <button className="px-3 sm:px-6 py-3 flex items-center text-center bg-transparent text-white border-2 border-white rounded-full shadow-md hover:bg-green-600 transition text-2xl sm:text-sm font-[Oswald]">
-                        Adopt Now
+                        View single description page.
                       </button>
                     </Link>
                   </div>
