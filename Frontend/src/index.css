@@ -34,3 +34,45 @@ body{
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+
+/* //searchbar */
+.absolute {
+  position: absolute;
+}
+
+.top-full {
+  top: 100%;
+}
+
+.left-0 {
+  left: 0;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.shadow-lg {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+.max-h-60 {
+  max-height: 15rem;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.hover\:bg-gray-100:hover {
+  background-color: #f7fafc;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

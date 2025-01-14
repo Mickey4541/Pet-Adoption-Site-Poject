@@ -13,7 +13,7 @@ const HowToAdoptSection = () => {
       <div className="flex flex-wrap justify-center gap-5 pb-6 items-center mr-3 ml-3">
 
 
-        <div className="flex-[1_1_300px] h-[300px] border-2 text-white flex justify-center pt-4 rounded-xl hover:bg-pink-500 transform transition duration-300 hover:scale-105 shadow-xl hover:shadow-pink-500 flex-col items-center bg-transparent">
+        <div className="flex-[1_1_300px] h-[300px] border-2 text-white flex justify-center pt-4 rounded-xl hover:bg-pink-500 transform transition duration-300 hover:scale-105 shadow-xl hover:shadow-pink-500 flex-col items-center bg-transparent text-center">
           <h2 className="font-bold font-[Oswald] text-[40px]">
             Search your Favourite
           </h2>
@@ -29,7 +29,7 @@ const HowToAdoptSection = () => {
 
 
 
-        <div className="flex-[1_1_300px] h-[300px] border-2 text-white flex justify-center pt-4 rounded-xl hover:bg-pink-500 transform transition duration-300 hover:scale-105 shadow-xl hover:shadow-pink-500 flex-col items-center bg-transparent">
+        <div className="flex-[1_1_300px] text-center h-[300px] border-2 text-white flex justify-center  pt-4 rounded-xl hover:bg-pink-500 transform transition duration-300 hover:scale-105 shadow-xl hover:shadow-pink-500 flex-col items-center bg-transparent">
           <h1 className="font-bold font-[Oswald] text-[40px]">
             Congratulations❤️
           </h1>
@@ -42,7 +42,7 @@ const HowToAdoptSection = () => {
       
       <div className="flex items-center justify-center h-[10vh]">
         <Link
-          to="/contact"
+          to="/animals"
           className="px-4 py-2 w-auto flex items-center justify-center bg-pink-500 text-white border-2 border-white rounded-full shadow-md hover:bg-green-600 transition text-sm sm:text-base font-[Oswald]"
         >Adopt Now
         </Link>

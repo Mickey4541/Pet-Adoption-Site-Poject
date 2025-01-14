@@ -3,57 +3,57 @@ import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { Link } from "react-router-dom";
 
-const Dogspage = () => {
+const Petspage = () => {
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
-  const Dogs = [
+  const Pets = [
     {
-      animalName: "Buddy",
-      animalAge: "3 years",
-      animalSize: "Medium",
-      animalGender: "Male",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "California",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/dog-736885_1280.jpg",
-      animalDescription:
-        "Buddy is a playful dog who loves to run and fetch toys.",
-      category: "Dog",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Max",
+      animalName: "Hammy",
       animalAge: "2 years",
-      animalSize: "Large",
+      animalSize: "Small",
       animalGender: "Male",
       animalVaccinated: true,
       animalHealthStatus: "Healthy",
       animalLocation: "Texas",
       animalImage:
-        "https://cdn.pixabay.com/photo/2017/09/01/05/51/dog-2693984_1280.jpg",
+        "https://cdn.pixabay.com/photo/2016/03/09/09/16/hamster-1245864_1280.jpg",
       animalDescription:
-        "Max is an energetic dog who enjoys long walks and playing in the park.",
-      category: "Dog",
+        "Hammy is a curious and energetic hamster who loves to run on his wheel and explore.",
+      category: "Hamster",
       status: "Available for Adoption",
     },
     {
-      animalName: "Bella",
-      animalAge: "4 years",
+      animalName: "Gizmo",
+      animalAge: "3 years",
       animalSize: "Small",
+      animalGender: "Male",
+      animalVaccinated: true,
+      animalHealthStatus: "Healthy",
+      animalLocation: "California",
+      animalImage:
+        "https://cdn.pixabay.com/photo/2017/06/06/22/26/guinea-pig-2379529_1280.jpg",
+      animalDescription:
+        "Gizmo is a friendly guinea pig who enjoys cuddling and eating fresh veggies.",
+      category: "Guinea Pig",
+      status: "Available for Adoption",
+    },
+    {
+      animalName: "Fluffy",
+      animalAge: "4 years",
+      animalSize: "Medium",
       animalGender: "Female",
       animalVaccinated: true,
       animalHealthStatus: "Healthy",
       animalLocation: "Florida",
       animalImage:
-        "https://cdn.pixabay.com/photo/2016/01/15/20/25/dog-1135291_1280.jpg",
+        "https://cdn.pixabay.com/photo/2016/04/13/20/45/rabbit-1327854_1280.jpg",
       animalDescription:
-        "Bella is a calm and affectionate dog who loves cuddles and playing with children.",
-      category: "Dog",
+        "Fluffy is a sweet and gentle rabbit who loves to hop around and eat carrots.",
+      category: "Rabbit",
       status: "Adopted",
     },
     {
-      animalName: "Luna",
+      animalName: "Peanut",
       animalAge: "1 year",
       animalSize: "Small",
       animalGender: "Female",
@@ -61,25 +61,25 @@ const Dogspage = () => {
       animalHealthStatus: "Healthy",
       animalLocation: "New York",
       animalImage:
-        "https://cdn.pixabay.com/photo/2020/07/17/12/29/dog-5412800_1280.jpg",
+        "https://cdn.pixabay.com/photo/2018/01/18/19/16/squirrel-3095949_1280.jpg",
       animalDescription:
-        "Luna is a curious dog who enjoys exploring new places and making new friends.",
-      category: "Dog",
+        "Peanut is a playful and quick squirrel who enjoys climbing trees and finding snacks.",
+      category: "Squirrel",
       status: "Available for Adoption",
     },
     {
       animalName: "Rocky",
-      animalAge: "5 years",
-      animalSize: "Large",
+      animalAge: "2 years",
+      animalSize: "Small",
       animalGender: "Male",
       animalVaccinated: true,
       animalHealthStatus: "Healthy",
-      animalLocation: "California",
+      animalLocation: "Texas",
       animalImage:
-        "https://cdn.pixabay.com/photo/2016/11/19/10/29/dog-1836403_1280.jpg",
+        "https://cdn.pixabay.com/photo/2017/02/09/15/14/ferret-2058029_1280.jpg",
       animalDescription:
-        "Rocky is a loyal and brave dog who enjoys outdoor adventures and protecting his family.",
-      category: "Dog",
+        "Rocky is a mischievous ferret who enjoys running through tunnels and playing with toys.",
+      category: "Ferret",
       status: "Adopted",
     },
   ];
@@ -89,76 +89,82 @@ const Dogspage = () => {
     setSearchQuery(event.target.value.toLowerCase());
   };
 
-  // Filter dogs based on the search query
-  const filteredDogs = Dogs.filter((dog) =>
-    dog.animalName.toLowerCase().includes(searchQuery) ||
-    dog.category.toLowerCase().includes(searchQuery)
+  // Filter pets based on the search query
+  const filteredPets = Pets.filter((pet) =>
+    pet.animalName.toLowerCase().includes(searchQuery) ||
+    pet.category.toLowerCase().includes(searchQuery)
   );
 
   return (
     <>
       <Navbar />
       <h2 className="text-4xl font-bold text-center mt-8 mb-6 text-white">
-        <span className="text-pink-600">Available Dogs</span> for Adoption
+        <span className="text-pink-600">Available Pets</span> for Adoption
       </h2>
 
-      {/* Search bar */}
+
+
+
+
       <div className="text-center mb-6">
         <input
           type="text"
           value={searchQuery}
           onChange={handleSearch}
-          placeholder="Search Dogs here."
+          placeholder="Search pets you need."
           className="bg-black text-white placeholder-white px-8 py-2 border-2 border-white rounded-full"
         />
       </div>
 
       <div className="container mx-auto px-4 pb-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredDogs.length > 0 ? (
-            filteredDogs.map((dog, index) => (
+          {filteredPets.length > 0 ? (
+            filteredPets.map((pet, index) => (
               <div
                 key={index}
                 className="bg-gray-800 text-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 border-2 border-white"
               >
                 <div className="relative">
                   <img
-                    src={dog.animalImage}
-                    alt={dog.animalName}
+                    src={pet.animalImage}
+                    alt={pet.animalName}
                     className="w-full h-52 object-cover p-1 rounded-xl"
                   />
-                  {/* Category tag below the image and aligned left */}
+
+
+
+
                   <span className="absolute top-full right-4 mt-2 bg-pink-700 text-white font-medium font-[Oswald] text-sm  px-3 py-2 rounded-full">
-                    {dog.category}
+                    {pet.category}
                   </span>
                   <span className="absolute top-full left-4 mt-2 bg-pink-700 text-white font-medium font-[Oswald] text-sm  px-3 py-2 rounded-full">
-                    {dog.status}
+                    {pet.status}
                   </span>
                 </div>
                 <div className="p-4 flex pt-12 flex-col font-[Oswald]">
                   <h3 className="text-3xl text-center font-bold text-White mb-2">
-                    {dog.animalName}
+                    {pet.animalName}
                   </h3>
                   <p className="text-xl text-white mb-1">
-                    <strong className="text-pink-700">Age:</strong> {dog.animalAge}
+                    <strong className="text-pink-700">Age:</strong> {pet.animalAge}
                   </p>
                   <p className="text-xl text-white mb-1">
-                    <strong className="text-pink-600">Size:</strong> {dog.animalSize}
+                    <strong className="text-pink-600">Size:</strong> {pet.animalSize}
                   </p>
                   <p className="text-xl text-white mb-1">
-                    <strong className="text-pink-600">Gender:</strong> {dog.animalGender}
+                    <strong className="text-pink-600">Gender:</strong> {pet.animalGender}
                   </p>
                   <p className="text-xl text-white mb-1">
-                    <strong className="text-pink-600">Vaccinated:</strong> {dog.animalVaccinated ? "Yes" : "No"}
+                    <strong className="text-pink-600">Vaccinated:</strong> {pet.animalVaccinated ? "Yes" : "No"}
                   </p>
                   <p className="text-xl text-white mb-1">
-                    <strong className="text-pink-600">Health Status:</strong> {dog.animalHealthStatus}
+                    <strong className="text-pink-600">Health Status:</strong> {pet.animalHealthStatus}
                   </p>
                   <p className="text-xl text-white mb-1">
-                    <strong className="text-pink-600">Location:</strong> {dog.animalLocation}
+                    <strong className="text-pink-600">Location:</strong> {pet.animalLocation}
                   </p>
                   <p className="text-xl text-white mb-1">
-                    <strong className="text-pink-600">Description:</strong> {dog.animalDescription}
+                    <strong className="text-pink-600">Description:</strong> {pet.animalDescription}
                   </p>
 
                   <div className="flex items-center justify-center mt-4">
@@ -172,7 +178,7 @@ const Dogspage = () => {
               </div>
             ))
           ) : (
-            <p className="text-white text-center text-2xl">No dogs found.</p>
+            <p className="text-white text-center text-2xl">No pets found.</p>
           )}
         </div>
       </div>
@@ -181,4 +187,4 @@ const Dogspage = () => {
   );
 };
 
-export default Dogspage;
+export default Petspage;

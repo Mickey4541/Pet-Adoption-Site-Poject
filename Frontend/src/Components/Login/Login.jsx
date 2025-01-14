@@ -30,9 +30,20 @@ const Login = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-      <div className="bg-blue-500 rounded-lg shadow-lg p-6 w-full max-w-md relative">
+      <div className="bg-pink-500 rounded-lg shadow-lg p-6 w-full max-w-md relative">
         <h2 className="text-2xl font-bold text-white mb-4 text-center">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-xl font-medium text-white">Username</label>
+            <input
+              type="text"
+              name="username"
+              value={credentials.username}
+              onChange={handleChange}
+              className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+              required
+            />
+          </div>
           <div>
             <label className="block text-xl font-medium text-white">Email</label>
             <input

@@ -7,6 +7,12 @@ import AboutUs from './Pages/AboutUsPage/AboutUs';
 import Catspage from './Pages/Catspage/Catspage';
 import Dogspage from './Pages/DogsPage/Dogspage';
 import Login from './Components/Login/Login';
+import BirdsPage from './Pages/BirdsPage/BirdsPage';
+import OtherAnimalsPage from './Pages/OthersAnimalPage/OtherAnimalsPage';
+import ContactUs from './Pages/ContactUsPage/ContactUs';
+import PrivacyPolicy from './Pages/PrivacyPolicy/PrivacyPolicy';
+import TermsAndCondition from './Pages/TermsAndCondition/TermsAndCondition';
+import AboutDeveloper from './Pages/AboutDeveloper/AboutDeveloper';
 
 const App = () => {
 
@@ -44,6 +50,15 @@ const App = () => {
         <Route path='/aboutus' element={<AboutUs/>}/>
         <Route path='/category/cats' element={<Catspage/>}/>
         <Route path='/category/dogs' element={<Dogspage/>}/>
+        <Route path='/category/birds' element={<BirdsPage/>}/>
+        <Route path='/category/others' element={<OtherAnimalsPage/>}/>
+
+
+        {/* Footer pages */}
+        <Route path='/contactus' element={<ContactUs/>}/>
+        <Route path='/privacypolicy' element={<PrivacyPolicy/>}/>
+        <Route path='/tac' element={<TermsAndCondition/>}/>
+        <Route path='/aboutDeveloper' element={<AboutDeveloper/>}/>
       </Routes>
 
        {/* model pahile nai open xa vani register maa close model pass gareko ani onclose jaha xa tyo open model lai close garna use vayo*/}

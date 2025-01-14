@@ -20,20 +20,20 @@ const HeroSectionLeftSide = () => {
         
         <span className="text-yellow-300 font-bold"></span>
       </p>
-      <p className='font-bold text-[Oswald] text-pink-500 text-[20px]'>"Dogs show unconditional love and loyalty, always ready to brighten your day with a wagging tail. Cats, with their soothing purrs and gentle cuddles, bring comfort and warmth to every moment. 🐶💖🐱"</p>
+      <p className='font-bold text-[Oswald] text-pink-500 text-[20px]'>"Dogs show unconditional love and loyalty. Cats, with  gentle cuddles, bring comfort and warmth to every moment. 🐶💖🐱"</p>
       <p className="mt-4 text-base font-semibold">
         Do you have a interesting Story about your pet?
       </p>
 
       <div className="flex justify-center lg:justify-start mt-6 space-x-4">
         <Link
-          to="/contact"
+          to="/contactus"
           className="px-3 sm:px-6 py-3  bg-transparent text-white border-2 border-white rounded-full shadow-md hover:bg-green-600 transition text-xs sm:text-sm font-[Oswald]"
         >
           Contact us
         </Link>
         <Link
-          to="#"
+          to="/contactus"
           className="px-3 sm:px-6 py-2 sm:py-3 border-2 border-white rounded-full flex items-center hover:bg-white hover:text-black transition text-xs sm:text-sm font-[Oswald]"
         >
           <svg

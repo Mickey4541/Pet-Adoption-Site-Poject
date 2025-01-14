@@ -1,5 +1,6 @@
 import React from "react";
 import CopyrightSection from "../CopyrightSection/CopyrightSection";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -29,17 +30,25 @@ const Footer = () => {
         <div className="flex-1 text-center md:text-left flex flex-col items-center justify-center">
           <h3 className="text-xl font-bold mb-4 font-[Oswald]">Quick <span className="text-pink-500">Links</span></h3>
           <ul className="space-y-2 text-center">
+            <Link to='/privacypolicy'>
             <li className="hover:text-green-400 cursor-pointer font-[Oswald]">
               Privacy Policy
             </li>
+            </Link>
+            <Link to='/contactus'>
             <li className="hover:text-green-400 cursor-pointer font-[Oswald]">Contact Us</li>
+            </Link>
             <li className="hover:text-green-400 cursor-pointer font-[Oswald]">Donate Us</li>
+            <Link to='/tac'>
             <li className="hover:text-green-400 cursor-pointer font-[Oswald]">
               Terms and Conditions
             </li>
+            </Link>
+            <Link to='/aboutdeveloper'>
             <li className="hover:text-green-400 cursor-pointer font-[Oswald]">
               About Developer
             </li>
+            </Link>
           </ul>
         </div>
 
@@ -53,9 +62,11 @@ const Footer = () => {
             alt="Adopt a Friend"
             className="h-[200px] rounded-lg shadow-lg"
           />
-          <button className="text-xl mt-6 px-6 py-2 bg-pink-500 text-white font-semibold rounded-full shadow-lg hover:bg-pink-600 transition duration-300 font-[Oswald] border-none">
+         <Link to='/contactus'>
+         <button className="text-xl mt-6 px-6 py-2 bg-pink-500 text-white font-semibold rounded-full shadow-lg hover:bg-pink-600 transition duration-300 font-[Oswald] border-none">
             Contact Now
           </button>
+         </Link>
         </div>
       </div>
       {/* Footer Bottom */}
