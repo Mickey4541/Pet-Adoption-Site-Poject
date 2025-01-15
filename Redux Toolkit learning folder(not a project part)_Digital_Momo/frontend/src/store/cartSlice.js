@@ -159,7 +159,10 @@ export function fetchProducts(){
 
 //yo garsakepaxi aba hamro backend ko data chai initial state ko data maa baseko  xa. aba aru jun sukai page maa tyo data dekhauna paryo vani state bata/store bata dekhauna milyo.
 
-// aba if hamilai state bata kei data nikalna paryo vani::::
-// - jaba state bata kei kura modify, trigger or changes garnu paryo vani usedispatch()
+// aba if hamilai state bata kei data nikalna paryo vani::::product.jsx page maa in our case:
 
-// - Raa jaba kei kura nikalna parni hunxa herna parni hunxa taba useSelector use garxau.
+// - jaba state bata kei kura modify, trigger or changes garnu paryo vani usedispatch() hook. Delete modify create garnu parey useDispatch.
+
+// - Raa jaba kei kura nikalna parni hunxa herna parni hunxa taba useSelector hook use garxau. Basically data read garnu parey.
+
+//aba product.jsx maa const data = useSelector bata suru.

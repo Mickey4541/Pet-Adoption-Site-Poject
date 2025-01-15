@@ -43,13 +43,17 @@ export default function Product() {
 
 
   const dispatch = useDispatch() //useDispatch is given by react-redux.
-
+  //aba cartslice sakyyepaxi:::data herna paryo so, useSelector
+  //data ra status lai destructure gareko ani data lai aauta alias(nickname) diyako.
+  const {data : products, status} = useSelector((state)=>state.product)//(state) vaneko store vayo hamro main store.js file. ani state.product vaneko store bhitra reducer product: productSlice vayo. so store bhitra ko productSlice lai refer gariraako xa.
+  console.log(data);
+  
   //initially page mount hudaa fetchproduct vanni function lai call garxa useeffect ley.
   useEffect(() => {
     dispatch(fetchProducts());// dispatch is like sending a message to the Redux store, saying, "Hey, do this!". Dispatch is a function used to send actions to the Redux store. These actions tell the store what to do, such as updating the state or fetching data.kei kura invoke garni, modify garni, delete garni vayepaxi maile dispatch use garxau.
   }, []);
 
-
+//2:40 completed.
 
   return (
     <div className="relative w-full">
