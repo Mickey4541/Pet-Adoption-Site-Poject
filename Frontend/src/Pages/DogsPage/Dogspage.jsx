@@ -1,99 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAnimals } from "../../Store/AdoptionAvailableOrNotSlice";
 
 const Dogspage = () => {
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
-  const Dogs = [
-    {
-      animalName: "Buddy",
-      animalAge: "3 years",
-      animalSize: "Medium",
-      animalGender: "Male",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "California",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/dog-736885_1280.jpg",
-      animalDescription:
-        "Buddy is a playful dog who loves to run and fetch toys.",
-      category: "Dog",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Max",
-      animalAge: "2 years",
-      animalSize: "Large",
-      animalGender: "Male",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "Texas",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2017/09/01/05/51/dog-2693984_1280.jpg",
-      animalDescription:
-        "Max is an energetic dog who enjoys long walks and playing in the park.",
-      category: "Dog",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Bella",
-      animalAge: "4 years",
-      animalSize: "Small",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "Florida",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2016/01/15/20/25/dog-1135291_1280.jpg",
-      animalDescription:
-        "Bella is a calm and affectionate dog who loves cuddles and playing with children.",
-      category: "Dog",
-      status: "Adopted",
-    },
-    {
-      animalName: "Luna",
-      animalAge: "1 year",
-      animalSize: "Small",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "New York",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2020/07/17/12/29/dog-5412800_1280.jpg",
-      animalDescription:
-        "Luna is a curious dog who enjoys exploring new places and making new friends.",
-      category: "Dog",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Rocky",
-      animalAge: "5 years",
-      animalSize: "Large",
-      animalGender: "Male",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "California",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2016/11/19/10/29/dog-1836403_1280.jpg",
-      animalDescription:
-        "Rocky is a loyal and brave dog who enjoys outdoor adventures and protecting his family.",
-      category: "Dog",
-      status: "Adopted",
-    },
-  ];
+ const {data:Animals, status} = useSelector((state) => state.AdoptionAvailableOrNot)
+ console.log(Animals);
+
+
+ const Dogs = Animals.filter((animal) => animal.category === 'dog');
+
+ 
 
   // Function to handle search input
   const handleSearch = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
   };
 
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchAnimals())
+  }, [])
+  
+  
   // Filter dogs based on the search query
   const filteredDogs = Dogs.filter((dog) =>
     dog.animalName.toLowerCase().includes(searchQuery) ||
     dog.category.toLowerCase().includes(searchQuery)
   );
+
+
 
   return (
     <>

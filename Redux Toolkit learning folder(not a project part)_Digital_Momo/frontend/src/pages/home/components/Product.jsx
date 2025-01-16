@@ -43,6 +43,8 @@ export default function Product() {
 
 
   const dispatch = useDispatch() //useDispatch is given by react-redux.
+
+  
   //aba cartslice sakyyepaxi:::data herna paryo so, useSelector
   //data ra status lai destructure gareko ani data lai aauta alias(nickname) diyako.
   const {data : products, status} = useSelector((state)=>state.product)//(state) vaneko store vayo hamro main store.js file. ani state.product vaneko store bhitra reducer product: productSlice vayo. so store bhitra ko productSlice lai refer gariraako xa.

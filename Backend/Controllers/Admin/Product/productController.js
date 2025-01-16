@@ -35,7 +35,7 @@ exports.createAnimal =  async (req, res) => {
         if (!animalLocation || typeof animalLocation !== 'string') {
             return res.status(400).json({ message: "Invalid or missing animal location" });
         }
-        if (!category || !['cat', 'dog', 'monkey', 'other'].includes(category)) {
+        if (!category || !['cat', 'dog', 'bird', 'other'].includes(category)) {
         return res.status(400).json({ message: "Invalid or missing animal category" });
         }
         if (!status || !['Available for adoption', 'Already adopted'].includes(status)) {

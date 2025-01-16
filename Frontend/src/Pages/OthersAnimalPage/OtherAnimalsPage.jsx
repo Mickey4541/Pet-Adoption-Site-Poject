@@ -1,93 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAnimals } from "../../Store/AdoptionAvailableOrNotSlice";
 
 const Petspage = () => {
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
-  const Pets = [
-    {
-      animalName: "Hammy",
-      animalAge: "2 years",
-      animalSize: "Small",
-      animalGender: "Male",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "Texas",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2016/03/09/09/16/hamster-1245864_1280.jpg",
-      animalDescription:
-        "Hammy is a curious and energetic hamster who loves to run on his wheel and explore.",
-      category: "Hamster",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Gizmo",
-      animalAge: "3 years",
-      animalSize: "Small",
-      animalGender: "Male",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "California",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2017/06/06/22/26/guinea-pig-2379529_1280.jpg",
-      animalDescription:
-        "Gizmo is a friendly guinea pig who enjoys cuddling and eating fresh veggies.",
-      category: "Guinea Pig",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Fluffy",
-      animalAge: "4 years",
-      animalSize: "Medium",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "Florida",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2016/04/13/20/45/rabbit-1327854_1280.jpg",
-      animalDescription:
-        "Fluffy is a sweet and gentle rabbit who loves to hop around and eat carrots.",
-      category: "Rabbit",
-      status: "Adopted",
-    },
-    {
-      animalName: "Peanut",
-      animalAge: "1 year",
-      animalSize: "Small",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "New York",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2018/01/18/19/16/squirrel-3095949_1280.jpg",
-      animalDescription:
-        "Peanut is a playful and quick squirrel who enjoys climbing trees and finding snacks.",
-      category: "Squirrel",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Rocky",
-      animalAge: "2 years",
-      animalSize: "Small",
-      animalGender: "Male",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "Texas",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2017/02/09/15/14/ferret-2058029_1280.jpg",
-      animalDescription:
-        "Rocky is a mischievous ferret who enjoys running through tunnels and playing with toys.",
-      category: "Ferret",
-      status: "Adopted",
-    },
-  ];
+  const {data:Animals,status} = useSelector((state) => state.AdoptionAvailableOrNot)
+  console.log("This is a other animals page", Animals);
+
+
+  const Pets = Animals.filter((animal) => animal.category === "other")
+  
 
   // Function to handle search input
   const handleSearch = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
   };
+
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchAnimals())
+  }, [])
+  
 
   // Filter pets based on the search query
   const filteredPets = Pets.filter((pet) =>
@@ -101,10 +39,6 @@ const Petspage = () => {
       <h2 className="text-4xl font-bold text-center mt-8 mb-6 text-white">
         <span className="text-pink-600">Available Pets</span> for Adoption
       </h2>
-
-
-
-
 
       <div className="text-center mb-6">
         <input

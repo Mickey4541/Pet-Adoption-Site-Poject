@@ -33,7 +33,7 @@ const animalSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ['cat', 'dog', 'monkey', 'other'], // You can add more categories here
+        enum: ['cat', 'dog', 'bird', 'other'], // You can add more categories here
         required: true,
     },
     status: {

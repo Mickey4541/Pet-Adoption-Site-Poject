@@ -14,6 +14,9 @@ import PrivacyPolicy from './Pages/PrivacyPolicy/PrivacyPolicy';
 import TermsAndCondition from './Pages/TermsAndCondition/TermsAndCondition';
 import AboutDeveloper from './Pages/AboutDeveloper/AboutDeveloper';
 import AdoptNowFormPage from './Pages/AdoptNowFormPage/AdoptNowFormPage';
+import { Provider } from 'react-redux';
+import store from './Store/store';
+import SingleAnimalDetailsPage from './Pages/SingleAnimalDetailsPage/SingleAnimalDetailsPage';
 
 const App = () => {
 
@@ -31,7 +34,8 @@ const App = () => {
   };
 
   return (
-    <Router>
+    <Provider store={store}>
+<Router>
       <Routes>
         {/* Homepage Route */}
         <Route path="/" element={<Homepage  />} />
@@ -63,11 +67,15 @@ const App = () => {
 
 
         <Route path='/adopt' element={<AdoptNowFormPage/>}/>
+        <Route path='/singleanimal/:id' element={<SingleAnimalDetailsPage/>}/>
       </Routes>
 
        {/* model pahile nai open xa vani register maa close model pass gareko ani onclose jaha xa tyo open model lai close garna use vayo*/}
       {/* {isModalOpen && <Register onClose={closeRegisterModal} />} */}
     </Router>
+
+    </Provider>
+    
   );
 };
 

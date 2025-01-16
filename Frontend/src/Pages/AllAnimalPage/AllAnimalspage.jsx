@@ -1,132 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { Link } from "react-router-dom";
+import { fetchAnimals } from "../../Store/AdoptionAvailableOrNotSlice";
+import { useDispatch, useSelector } from 'react-redux'
 
 const AllAnimalspage = () => {
-  // Demo data for animals
-  const demoAnimals = [
-    {
-      animalName: "Charlie",
-      animalAge: "2 years",
-      animalSize: "Medium",
-      animalGender: "Male",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "California",
-      animalImage:
-        "https://plus.unsplash.com/premium_photo-1728545290865-cecc097be765?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0JTIwYW5kJTIwZG9nfGVufDB8fDB8fHww",
-      animalDescription:
-        "Charlie is a playful and loving dog who enjoys running around and meeting new people.",
-      category: "Dog",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Bella",
-      animalAge: "3 years",
-      animalSize: "Small",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "New York",
-      animalImage:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzrc_ihk17wJ9R8zSC2_snymkqSYEQKbO1Pg&s",
-      animalDescription:
-        "Bella is a sweet and calm cat who loves snuggling and staying indoors.",
-      category: "Dog",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Harry",
-      animalAge: "3 years",
-      animalSize: "Small",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "New York",
-      animalImage:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnOrOwY43A2IXz1v0yLjmHVWj0d2_YMm_6eA&s",
-      animalDescription:
-        "Harry is a sweet and calm cat who loves snuggling and staying indoors.",
-      category: "Cat",
-      status: "Adopted",
-    },
-    {
-      animalName: "Marky",
-      animalAge: "3 years",
-      animalSize: "Small",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "New York",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2023/08/18/15/02/dog-8198719_1280.jpg",
-      animalDescription:
-        "Marky is a sweet and calm cat who loves snuggling and staying indoors.",
-      category: "Dog",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Bob",
-      animalAge: "3 years",
-      animalSize: "Small",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "New York",
-      animalImage:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaZTFntLKHks7sruJKKpB99HTHavTQEyv-Hg&s",
-      animalDescription:
-        "BoB is a sweet and calm cat who loves snuggling and staying indoors.",
-      category: "Cat",
-      status: "Adopted",
-    },
-    {
-      animalName: "Oggy",
-      animalAge: "3 years",
-      animalSize: "Small",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "New York",
-      animalImage:
-        "https://static.scientificamerican.com/sciam/cache/file/2AE14CDD-1265-470C-9B15F49024186C10_source.jpg?w=1200",
-      animalDescription:
-        "Oggy is a sweet and calm cat who loves snuggling and staying indoors.",
-      category: "Cat",
-      status: "Adopted",
-    },
-    {
-      animalName: "Pintu",
-      animalAge: "3 years",
-      animalSize: "Small",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "New York",
-      animalImage:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScpeV2asqy9rcTkcu09nqC9-PK4v8Ji74DiA&s",
-      animalDescription:
-        "Pintu is a sweet and calm cat who loves snuggling and staying indoors.",
-      category: "Dog",
-      status: "Adopted",
-    },
-    {
-      animalName: "Kalu",
-      animalAge: "3 years",
-      animalSize: "Small",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "New York",
-      animalImage:
-        "https://germanshepherdpuppiesnc.com/wp-content/uploads/2023/12/black-german-shepherd-lab-mix.jpeg",
-      animalDescription:
-        "Kalu is a sweet and calm cat who loves snuggling and staying indoors.",
-      category: "Dog",
-      status: "Adopted",
-    },
-  ];
+
+
+//   const adoptionState = useSelector((state) => state);
+// console.log("Full Redux State:", adoptionState);
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -134,12 +17,34 @@ const AllAnimalspage = () => {
     setSearchQuery(e.target.value);
   };
 
-  const filteredAnimals = demoAnimals.filter((animal) => {
+  
+ //data ra status lai destructure gareko ani data lai aauta alias(nickname) diyako.
+ const {data:Animals,status} = useSelector((state)=>state.AdoptionAvailableOrNot)//(state) vaneko store vayo hamro main store.js file. ani state.product vaneko store bhitra reducer product: productSlice vayo. so store bhitra ko productSlice lai refer gariraako xa.
+ console.log(Animals, "This is my data");
+
+
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchAnimals())
+  },[])
+
+
+
+
+  const filteredAnimals = Animals.filter((animal) => {
     return (
       animal.animalName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       animal.category.toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
+
+
+
+
+  if (status === 'LOADING') return <p>Loading...</p>;
+  if (status === 'ERROR') return <p>Error fetching animals!</p>;
+
 
   return (
     <>
@@ -215,7 +120,7 @@ const AllAnimalspage = () => {
                   </p>
 
                   <div className="flex items-center justify-center mt-4">
-                    <Link to="/adopt">
+                  <Link to={`/singleanimal/${animal._id}`}>
                       <button className="px-3 sm:px-6 py-3 flex items-center text-center bg-transparent text-white border-2 border-white rounded-full shadow-md hover:bg-green-600 transition text-2xl sm:text-sm font-[Oswald]">
                         View single description page.
                       </button>

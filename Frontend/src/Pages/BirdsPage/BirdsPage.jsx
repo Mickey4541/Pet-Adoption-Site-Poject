@@ -1,135 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { Link } from "react-router-dom";
 import searchIconLight from "../../assets/search-w.png";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAnimals } from "../../Store/AdoptionAvailableOrNotSlice";
 
 const BirdsPage = () => {
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
-  const Birds = [
-    {
-      animalName: "Kiwi",
-      animalAge: "2 years",
-      animalSize: "Small",
-      animalGender: "Male",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "California",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2016/09/07/18/10/kiwi-1658876_1280.jpg",
-      animalDescription:
-        "Kiwi is a playful bird who loves to chirp and fly around the house.",
-      category: "Bird",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Sunny",
-      animalAge: "1 year",
-      animalSize: "Medium",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "Florida",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2017/05/15/11/35/sun-conure-2312334_1280.jpg",
-      animalDescription:
-        "Sunny is a bright and energetic conure who enjoys spending time with people.",
-      category: "Bird",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Coco",
-      animalAge: "5 years",
-      animalSize: "Medium",
-      animalGender: "Male",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "Texas",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2017/09/02/00/12/animal-2702012_1280.jpg",
-      animalDescription:
-        "Coco is a cheerful parrot who loves singing and imitating sounds.",
-      category: "Bird",
-      status: "Adopted",
-    },
-    {
-      animalName: "Pip",
-      animalAge: "3 years",
-      animalSize: "Small",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "New York",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2015/05/31/12/43/bird-792323_1280.jpg",
-      animalDescription:
-        "Pip is a small, sweet finch who enjoys flitting around in its cage.",
-      category: "Bird",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Bella",
-      animalAge: "4 years",
-      animalSize: "Large",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "California",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2020/04/01/16/46/blue-and-yellow-macaw-4096112_1280.jpg",
-      animalDescription:
-        "Bella is a beautiful macaw who enjoys talking and spending time with its owners.",
-      category: "Bird",
-      status: "Adopted",
-    },
-    {
-      animalName: "Zephyr",
-      animalAge: "2 years",
-      animalSize: "Small",
-      animalGender: "Male",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "New York",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2016/06/03/13/47/bluebird-1439846_1280.jpg",
-      animalDescription:
-        "Zephyr is a calm and gentle bird who enjoys watching the world go by from its perch.",
-      category: "Bird",
-      status: "Adopted",
-    },
-    {
-      animalName: "Fluff",
-      animalAge: "1 year",
-      animalSize: "Small",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "New York",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2017/07/27/15/38/bird-2547667_1280.jpg",
-      animalDescription:
-        "Fluff is a cute little lovebird who loves to be around its companions and enjoys being pet.",
-      category: "Bird",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Chirpy",
-      animalAge: "3 years",
-      animalSize: "Medium",
-      animalGender: "Male",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "Florida",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2016/10/05/23/39/parrot-1716075_1280.jpg",
-      animalDescription:
-        "Chirpy is an affectionate parrot who loves mimicking sounds and is always ready for a treat.",
-      category: "Bird",
-      status: "Adopted",
-    },
-   
-  ];
+ const {data:Animals, status} = useSelector((state) => state.AdoptionAvailableOrNot)
+ console.log("This is a data from birds page", Animals);
+ 
+
+ const Birds = Animals.filter((animal) => animal.category === 'bird')
 
   // Function to handle search input
   const handleSearch = (event) => {
@@ -141,6 +25,11 @@ const BirdsPage = () => {
     bird.animalName.toLowerCase().includes(searchQuery) ||
     bird.category.toLowerCase().includes(searchQuery)
   );
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchAnimals())
+  }, [])
 
   return (
     <>

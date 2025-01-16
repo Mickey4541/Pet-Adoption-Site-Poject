@@ -1,100 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAnimals } from "../../Store/AdoptionAvailableOrNotSlice";
 
 const Catspage = () => {
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
-  const Cats = [
-    {
-      animalName: "haha cat",
-      animalAge: "2 years",
-      animalSize: "Small",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "California",
-      animalImage:
-        "https://t4.ftcdn.net/jpg/06/45/27/81/360_F_645278147_orAd7BZzFeVzJu1hr14wHj7FPxHmQoMw.jpg",
-      animalDescription:
-        "Mittens is a playful cat who enjoys cuddling and chasing toys around the house.",
-      category: "Cat",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "hehe cat",
-      animalAge: "3 years",
-      animalSize: "Medium",
-      animalGender: "Male",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "Texas",
-      animalImage:
-        "https://plus.unsplash.com/premium_photo-1677545182425-4fb12bdb9faf?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZnVubnklMjBjYXRzfGVufDB8fDB8fHww",
-      animalDescription:
-        "Whiskers is a curious and affectionate cat who loves to explore and nap in sunny spots.",
-      category: "Cat",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "huhu cat",
-      animalAge: "5 years",
-      animalSize: "Large",
-      animalGender: "Male",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "Florida",
-      animalImage:
-        "https://media.istockphoto.com/id/1188445864/photo/closeup-portrait-of-funny-ginger-cat-wearing-sunglasses-isolated-on-light-cyan-copyspace.jpg?s=612x612&w=0&k=20&c=LHy_WCxNUEdejVx2sKK3Hq_dAQ_yyNRxspDxiDLUymg=",
-      animalDescription:
-        "Shadow is a calm and laid-back cat who enjoys lounging and occasionally playing with toys.",
-      category: "Cat",
-      status: "Adopted",
-    },
-    {
-      animalName: "hait cat",
-      animalAge: "1 year",
-      animalSize: "Small",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "New York",
-      animalImage:
-        "https://media.istockphoto.com/id/1361306507/photo/funny-cat-looking-shocked-with-mouth-open.jpg?s=612x612&w=0&k=20&c=nZC2BlXoiC2tycIsiv_PvmUSwKhctikzVLy4Y3pgp10=",
-      animalDescription:
-        "Luna is an energetic kitten who loves to explore and be the center of attention.",
-      category: "Cat",
-      status: "Available for Adoption",
-    },
-    {
-      animalName: "Bella",
-      animalAge: "4 years",
-      animalSize: "Medium",
-      animalGender: "Female",
-      animalVaccinated: true,
-      animalHealthStatus: "Healthy",
-      animalLocation: "California",
-      animalImage:
-        "https://cdn.pixabay.com/photo/2020/03/23/21/44/cat-4955090_1280.jpg",
-      animalDescription:
-        "Bella is a sweet and independent cat who enjoys spending time by herself and being petted.",
-      category: "Cat",
-      status: "Adopted",
-    },
-  ];
 
-  // Function to handle search input
+  //seeing full redux state.
+  // const adoptionState = useSelector((state) => state);
+  // console.log("Full Redux State:", adoptionState);
+  
+  const {data:Animals, status} = useSelector((state)=>state.AdoptionAvailableOrNot)//(state) vaneko store vayo hamro main store.js file. ani state.AdoptionAvailableOrNot vaneko store bhitra reducer product: productSlice vayo. so store bhitra ko productSlice lai refer gariraako xa.
+  
+  console.log("This is cat data in Catspage:", Animals);
+
+   // Filtering the data to include only cats
+   const Cats = Animals.filter((animal) => animal.category === 'cat');
+  
   const handleSearch = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
   };
 
+  
+ const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchAnimals())
+  }, [])
+  
   // Filter cats based on the search query
   const filteredCats = Cats.filter((cat) =>
     cat.animalName.toLowerCase().includes(searchQuery) ||
     cat.category.toLowerCase().includes(searchQuery)
   );
 
+
+  // const dispatch = useDispatch()
+  // useEffect(() => {
+  //   if (Animals.length === 0) {
+  //     dispatch(fetchAnimals()); // Fetch animals if data is not already in the store
+  //     console.log("Data fetched through api");
+      
+  //   }
+  // }, [dispatch, Animals.length]);
+
+  if (status === 'LOADING') return <p>Loading...</p>;
+  if (status === 'ERROR') return <p>Error fetching animals!</p>;
   return (
     <>
       <Navbar />
