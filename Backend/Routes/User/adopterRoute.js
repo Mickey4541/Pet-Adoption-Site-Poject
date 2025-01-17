@@ -1,27 +1,29 @@
 const express = require("express");
 const Animal = require("../../Model/animalModel");
-const Adoption = require('../../Model/AdopterModel')
+const Adoption = require('../../Model/AdopterModel');
 const router = express.Router();
+const verifyToken = require('../../Middleware/isAuthenticated');
 
-// POST route
-router.post("/adopt", async (req, res) => {
-  const { petId, adopterName, adopterContact, adopterAddress, adopterEmail } = req.body;
+// POST route for adoption
+router.post("/adopt/:id", verifyToken, async (req, res) => {
+  const { adopterName, adopterContact, adopterAddress, adopterEmail } = req.body;
+  const { id } = req.params;
 
   try {
-    // pet animal xa ki xaina check garnu paryo aba
-    const pet = await Animal.findById(petId);
+    // Check if the pet exists
+    const pet = await Animal.findById(id);
     if (!pet) {
       return res.status(400).json({ success: false, message: "Pet not found." });
     }
 
-    // pet ajhai available xa ki nai adoption ko lagi check garnu paryo
+    // Check if the pet is available for adoption
     if (pet.status !== "Available for adoption") {
       return res.status(400).json({ success: false, message: "This pet has already been adopted." });
     }
 
     // Create the adoption record
     const adoption = new Adoption({
-      petId,
+      petId: id, // Use the pet's ID from the route
       adopterName,
       adopterContact,
       adopterAddress,

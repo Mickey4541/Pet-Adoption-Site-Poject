@@ -1,11 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit'
-import AdoptionAvailableOrNotSlice from './AdoptionAvailableOrNotSlice'
-
-
+import AllAnimalsSlice from './AllAnimalsSlice'
+import SingleAnimalSlice from './SingleAnimalSlice'
 
 export const store = configureStore({
     reducer: {
-        AdoptionAvailableOrNot : AdoptionAvailableOrNotSlice
+        AllAnimals : AllAnimalsSlice,
+        SingleAnimal : SingleAnimalSlice,
     }
 })
 

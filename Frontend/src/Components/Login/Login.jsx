@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios"; 
+import axios from "axios";
 
 const Login = ({ onClose }) => {
   const navigate = useNavigate();
-
-
 
   const [credentials, setCredentials] = useState({
     username: "",
@@ -15,15 +13,17 @@ const Login = ({ onClose }) => {
 
   const [flashMessage, setFlashMessage] = useState("");
 
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/"); // Redirect if already logged in
+    }
+  }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials({ ...credentials, [name]: value });
   };
-
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,17 +35,18 @@ const Login = ({ onClose }) => {
       );
 
       if (response.status === 200) {
-        const { token } = response.data; 
-        localStorage.setItem("token", token); 
+        const { token } = response.data;
+        localStorage.setItem("token", token);
 
         setFlashMessage("Login Successful!");
         setTimeout(() => {
           setFlashMessage("");
-          navigate("/"); 
-        }, 3000);
+          navigate("/"); // Redirect to the homepage
+        }, 2000);
       }
     } catch (error) {
-      const errorMessage = "Something went wrong. Please try again.";
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong. Please try again.";
       setFlashMessage(`Login Failed: ${errorMessage}`);
 
       setTimeout(() => {
@@ -53,8 +54,6 @@ const Login = ({ onClose }) => {
       }, 3000);
     }
   };
-
-
 
   const handleCancel = () => {
     if (onClose) {
@@ -122,7 +121,7 @@ const Login = ({ onClose }) => {
             </button>
           </div>
         </form>
-        <p className="text-center font-[Oswald] text-xl text-white">
+        <p className="text-center font-[Oswald] text-xl text-white mt-4">
           Don't have an Account?
         </p>
         <Link to="/register">

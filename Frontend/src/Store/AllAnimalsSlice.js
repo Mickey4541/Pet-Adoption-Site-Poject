@@ -4,14 +4,14 @@ import {STATUSES} from './statuses'
 import axios from 'axios'
 
 
-const AdoptionAvailableOrNotSlice = createSlice({
-    name: 'AdoptionAvailableOrNot',
+const AllAnimalsSlice = createSlice({
+    name: 'AllAnimals',
     initialState : {
         data: [],
         status: STATUSES.LOADING
     },
     reducers: {
-        setAdoptionAvailabeOrNot(state,action){
+        setAllAnimals(state,action){
             state.data = action.payload
         },
         setStatus(state, action){
@@ -20,8 +20,9 @@ const AdoptionAvailableOrNotSlice = createSlice({
     }
 })
 
-export const {setAdoptionAvailabeOrNot, setStatus} = AdoptionAvailableOrNotSlice.actions
-export default AdoptionAvailableOrNotSlice.reducer
+export const {setAllAnimals, setStatus} = AllAnimalsSlice.actions
+
+export default AllAnimalsSlice.reducer
 
 
 
@@ -32,7 +33,7 @@ export function fetchAnimals() {
         try {
             const response = await axios.get('http://localhost:3000/animals');
             console.log(response.data, "This is response");
-            dispatch(setAdoptionAvailabeOrNot(response.data.data)); // Pass only the data array
+            dispatch(setAllAnimals(response.data.data)); // Pass only the data array
             dispatch(setStatus(STATUSES.SUCCESS)); // Set success status
         } catch (error) {
             console.error("Error fetching animals:", error);

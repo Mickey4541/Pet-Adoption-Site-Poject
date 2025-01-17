@@ -35,13 +35,22 @@ exports.register = async (req, res) => {
 
 
 
+
+
 exports.login = async (req, res) => {
     const { username, email, password } = req.body;
 
+    // Check if all required fields are provided
+    if (!username || !email || !password) {
+        return res.status(400).json({
+            message: "Username, email, and password are required."
+        });
+    }
+
     try {
-        // Find user by username or email
+        // Find user by username and email
         const user = await User.findOne({
-            $or: [{ username }, { email }]
+            $and: [{ username }, { email }]
         });
 
         // If user not found
@@ -81,6 +90,7 @@ exports.login = async (req, res) => {
         });
     }
 };
+
 
 
 

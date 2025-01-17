@@ -3,12 +3,12 @@ import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAnimals } from "../../Store/AdoptionAvailableOrNotSlice";
+import { fetchAnimals } from "../../Store/AllAnimalsSlice";
 
 const Petspage = () => {
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
-  const {data:Animals,status} = useSelector((state) => state.AdoptionAvailableOrNot)
+  const {data:Animals,status} = useSelector((state) => state.AllAnimals)
   console.log("This is a other animals page", Animals);
 
 
@@ -102,9 +102,9 @@ const Petspage = () => {
                   </p>
 
                   <div className="flex items-center justify-center mt-4">
-                    <Link to="/adopt">
+                    <Link to={`/singleanimal/${pet._id}`}>
                       <button className="px-3 sm:px-6 py-3 flex items-center text-center bg-transparent text-white border-2 border-white rounded-full shadow-md hover:bg-green-600 transition text-2xl sm:text-sm font-[Oswald]">
-                        Adopt Now
+                        View Details
                       </button>
                     </Link>
                   </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { Link } from "react-router-dom";
-import { fetchAnimals } from "../../Store/AdoptionAvailableOrNotSlice";
+import { fetchAnimals } from "../../Store/AllAnimalsSlice";
 import { useDispatch, useSelector } from 'react-redux'
 
 const AllAnimalspage = () => {
@@ -19,7 +19,7 @@ const AllAnimalspage = () => {
 
   
  //data ra status lai destructure gareko ani data lai aauta alias(nickname) diyako.
- const {data:Animals,status} = useSelector((state)=>state.AdoptionAvailableOrNot)//(state) vaneko store vayo hamro main store.js file. ani state.product vaneko store bhitra reducer product: productSlice vayo. so store bhitra ko productSlice lai refer gariraako xa.
+ const {data:Animals,status} = useSelector((state)=>state.AllAnimals)//(state) vaneko store vayo hamro main store.js file. ani state.product vaneko store bhitra reducer product: productSlice vayo. so store bhitra ko productSlice lai refer gariraako xa.
  console.log(Animals, "This is my data");
 
 
@@ -122,7 +122,7 @@ const AllAnimalspage = () => {
                   <div className="flex items-center justify-center mt-4">
                   <Link to={`/singleanimal/${animal._id}`}>
                       <button className="px-3 sm:px-6 py-3 flex items-center text-center bg-transparent text-white border-2 border-white rounded-full shadow-md hover:bg-green-600 transition text-2xl sm:text-sm font-[Oswald]">
-                        View single description page.
+                        View Details.
                       </button>
                     </Link>
                   </div>

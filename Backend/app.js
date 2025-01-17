@@ -50,7 +50,7 @@ app.use("/api/users", userRoutes)
 
 // adopter routes
 const adopterRoutes = require("./Routes/User/adopterRoute");  
-app.use("/api/adopt", adopterRoutes); 
+app.use("/api", adopterRoutes); 
 
 //product route
 const productRoute = require('./Routes/Admin/productRoute')
