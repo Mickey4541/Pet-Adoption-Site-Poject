@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios'
+
 
 const Register = ({ onClose }) => {
   const navigate = useNavigate();
@@ -8,31 +10,65 @@ const Register = ({ onClose }) => {
     username: "",
     email: "",
     password: "",
-    role: "user", // Default role for registration
+    role: "user", //user default role rakheko
   });
+
+  const [flashMessage, setFlashMessage] = useState(""); 
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log("The name is", name);  //like username
+    console.log("The value is", value); // username ko value
     setFormData({ ...formData, [name]: value });
   };
 
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your registration logic here
-    console.log("Form submitted with data:", formData);
-    navigate("/"); // Navigate to homepage after submission
+    
+    try {
+      const response = await axios.post("http://localhost:3000/api/auth/register", formData);
+
+      if (response.status === 201) {
+        setFlashMessage("Registration Successful!"); 
+        setTimeout(() => {
+          setFlashMessage(""); 
+          navigate("/login"); 
+        }, 3000);
+      }
+    } catch (error) {
+      if (error.response) {
+        setFlashMessage("Registration Failed: ", error);
+      } else {
+        setFlashMessage("Something went wrong. Please try again.");
+      }
+
+      // Clear the message after 5 seconds
+      setTimeout(() => {
+        setFlashMessage("");
+      }, 3000);
+    }
   };
 
+  //cancel button function handler
   const handleCancel = () => {
     if (onClose) {
-      onClose(); // Close the modal if onClose is provided
+      onClose(); 
     }
-    navigate("/"); // Navigate back to the homepage
+    navigate("/"); 
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
       <div className="bg-pink-500 rounded-lg shadow-lg p-6 w-full max-w-md relative">
+         {/* Flash Message */}
+         {flashMessage && (
+          <div className="bg-green-700 text-white p-3  text-center mb-4 rounded-2xl">
+            {flashMessage}
+          </div>
+        )}
         <h2 className="text-2xl font-bold text-white mb-4 text-center">Register</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>

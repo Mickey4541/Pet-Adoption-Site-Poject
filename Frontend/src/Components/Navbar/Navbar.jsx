@@ -146,7 +146,7 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search pets"
-              className="bg-transparent border-0 outline-none text-white placeholder-white text-lg w-full" onChange={handleSearchChange}
+              className="bg-transparent border-0 outline-none text-white placeholder-white text-lg w-full" 
             />
             <img
               src={searchIconLight}
