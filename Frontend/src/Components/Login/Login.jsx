@@ -1,36 +1,76 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios"; 
 
 const Login = ({ onClose }) => {
   const navigate = useNavigate();
 
+
+
   const [credentials, setCredentials] = useState({
+    username: "",
     email: "",
     password: "",
   });
+
+  const [flashMessage, setFlashMessage] = useState("");
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials({ ...credentials, [name]: value });
   };
 
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your login logic here
-    console.log("Login submitted with:", credentials);
-    navigate("/"); // Navigate to homepage after successful login
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/login",
+        credentials
+      );
+
+      if (response.status === 200) {
+        const { token } = response.data; 
+        localStorage.setItem("token", token); 
+
+        setFlashMessage("Login Successful!");
+        setTimeout(() => {
+          setFlashMessage("");
+          navigate("/"); 
+        }, 3000);
+      }
+    } catch (error) {
+      const errorMessage = "Something went wrong. Please try again.";
+      setFlashMessage(`Login Failed: ${errorMessage}`);
+
+      setTimeout(() => {
+        setFlashMessage("");
+      }, 3000);
+    }
   };
+
+
 
   const handleCancel = () => {
     if (onClose) {
-      onClose(); // Close the modal if `onClose` is passed
+      onClose();
     }
-    navigate("/"); // Navigate back to the homepage
+    navigate("/");
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
       <div className="bg-pink-500 rounded-lg shadow-lg p-6 w-full max-w-md relative">
+        {flashMessage && (
+          <div className="bg-green-700 text-white p-3 text-center mb-4 rounded-2xl">
+            {flashMessage}
+          </div>
+        )}
         <h2 className="text-2xl font-bold text-white mb-4 text-center">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -82,15 +122,17 @@ const Login = ({ onClose }) => {
             </button>
           </div>
         </form>
-        <p className="text-center font-[Oswald] text-xl text-white">Don't have Account?</p>
-                  <Link to='/register'>
-                  
-                  <div className="flex items-center">
-                  <button className="text-center bg-blue-800 m-auto p-2 rounded-full px-6 text-white font-[Oswald]">Register</button>
-                  </div>
-                  </Link>
+        <p className="text-center font-[Oswald] text-xl text-white">
+          Don't have an Account?
+        </p>
+        <Link to="/register">
+          <div className="flex items-center">
+            <button className="text-center bg-blue-800 m-auto p-2 rounded-full px-6 text-white font-[Oswald]">
+              Register
+            </button>
+          </div>
+        </Link>
       </div>
-      
     </div>
   );
 };
