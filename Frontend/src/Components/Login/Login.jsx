@@ -185,10 +185,6 @@ const Login = ({ onClose }) => {
     }
   }, [navigate]);
 
-
-
-
-
   // Handle login on form submission
   const handleSubmit = async (e) => {
     e.preventDefault();

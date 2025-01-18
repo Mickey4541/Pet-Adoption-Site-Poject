@@ -4,8 +4,14 @@ import Footer from "../../Components/Footer/Footer";
 import { Link } from "react-router-dom";
 import { fetchAnimals } from "../../Store/AllAnimalsSlice";
 import { useDispatch, useSelector } from 'react-redux'
+import { setRole } from "../../Store/AuthSlice";
 
 const AllAnimalspage = () => {
+
+  const data = useSelector((state)=>state.auth)
+  console.log("Auth role data is", data?.role);
+  
+
 
 
 //   const adoptionState = useSelector((state) => state);

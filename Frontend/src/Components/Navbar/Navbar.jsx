@@ -209,28 +209,44 @@ const Navbar = () => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const menuRef = useRef(null);
 
+
+  
   const dispatch = useDispatch();
   const { token, data } = useSelector((state) => state.auth);
+  console.log("Token is", token);
+  
 
 
 
+
+
+  const [storedUserRole, setStoredUserRole] = useState('')
   // Persist token and user role in localStorage
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
+    const userRole = localStorage.getItem("userRole");
+    setStoredUserRole(userRole)
+
+    console.log("The user role  form nav", storedUserRole); //admin aako xa 
+    
     if (storedToken) {
       dispatch(setToken(storedToken));
     }else{
       console.log("No stored token");
     }
-  }, [dispatch]);
+  
+    },[]);
 
 
-  // Update localStorage when user data changes
-  useEffect(() => {
-    if (data?.role) {
-      localStorage.setItem("userRole", data.role);
-    }
-  }, [data?.role]);
+
+
+
+  // // Update localStorage when user data changes
+  // useEffect(() => {
+  //   if (data?.role) {
+  //     localStorage.setItem("userRolefromNavbar", data.role);
+  //   }
+  // }, [data?.role]);
 
 
 
@@ -254,6 +270,7 @@ const Navbar = () => {
     window.location.href = "/";
   };
 
+
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -262,6 +279,7 @@ const Navbar = () => {
         setIsCategoriesOpen(false);
       }
     };
+
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -278,7 +296,7 @@ const Navbar = () => {
           </h2>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop ko navigation */}
         <ul className="hidden lg:flex items-center space-x-6 font-[Oswald] text-2xl font-bold">
           <Link to="/" className="hover:text-red-500">Home</Link>
           <Link to="/animals" className="hover:text-red-500">Pets</Link>
@@ -303,7 +321,7 @@ const Navbar = () => {
           <Link to="/aboutus" className="hover:text-red-500">About us</Link>
         </ul>
 
-        {/* Desktop Buttons */}
+        {/* Desktop ko Buttons */}
         {!token ? (
           <Link to="/register">
             <button className="hidden lg:block px-6 py-2 bg-green-600 text-white rounded-full hover:bg-pink-500">
@@ -312,7 +330,7 @@ const Navbar = () => {
           </Link>
         ) : (
           <>
-            {data?.role === "admin" && (
+            {storedUserRole === "admin" && (
               <Link to="/add">
                 <button className="hidden lg:block px-6 py-2 bg-yellow-600 text-white rounded-full hover:bg-pink-500">
                   Add Animals
@@ -328,7 +346,7 @@ const Navbar = () => {
           </>
         )}
 
-        {/* Mobile Hamburger Menu */}
+        {/* Mobile ko  Hamburger Menu */}
         <div
           className="lg:hidden cursor-pointer flex flex-col space-y-1"
           onClick={toggleMenu}
@@ -339,7 +357,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile ko Menu */}
       {isMenuOpen && (
         <div className="lg:hidden bg-gray-100 py-4 px-6" ref={menuRef}>
           <div className="flex items-center bg-gray-800 px-4 py-2 rounded-full mb-4">
@@ -375,7 +393,7 @@ const Navbar = () => {
               </Link>
             ) : (
               <>
-                {data?.role === "admin" && (
+                {storedUserRole === "admin" && (
                   <Link to="/add" onClick={toggleMenu}>
                     <button className="px-6 py-2 bg-yellow-600 text-white rounded-full hover:bg-pink-500">
                       Add Animals
