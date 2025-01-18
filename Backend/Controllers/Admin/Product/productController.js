@@ -13,7 +13,9 @@ exports.createAnimal =  async (req, res) => {
             animalVaccinated, animalHealthStatus, animalLocation,
             animalDescription, category, status
         } = req.body;
-
+        const filename = req.file
+        console.log(filename, "This is filename");
+        
         if (!animalName || typeof animalName !== 'string') {
             return res.status(400).json({ message: "Invalid or missing animal name" });
         }

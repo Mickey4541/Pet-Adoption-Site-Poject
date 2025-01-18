@@ -210,7 +210,7 @@ const Navbar = () => {
   const menuRef = useRef(null);
 
 
-  
+
   const dispatch = useDispatch();
   const { token, data } = useSelector((state) => state.auth);
   console.log("Token is", token);
@@ -332,7 +332,7 @@ const Navbar = () => {
           <>
             {storedUserRole === "admin" && (
               <Link to="/add">
-                <button className="hidden lg:block px-6 py-2 bg-yellow-600 text-white rounded-full hover:bg-pink-500">
+                <button className="hidden lg:block px-6 py-2 bg-green-800 text-white rounded-full hover:bg-pink-500">
                   Add Animals
                 </button>
               </Link>

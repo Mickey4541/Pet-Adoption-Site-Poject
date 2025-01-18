@@ -1,83 +1,99 @@
 import React, { useState } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
-import axios from "axios";
 import { APIAuthenticated } from "../../http";
+import { useNavigate } from "react-router-dom";
+
 const CreateAnimal = () => {
-  const [formData, setFormData] = useState({
-    animalName: "",
-    animalAge: "",
-    animalSize: "",
-    animalGender: "",
-    animalVaccinated: false,
-    animalHealthStatus: "",
-    animalLocation: "",
-    animalDescription: "",
-    category: "cat",
-    status: "Available for adoption",
+const navigate = useNavigate(); 
+
+// State to manage form input fields
+const [formData, setFormData] = useState({
+  animalName: "", 
+  animalAge: "",
+  animalSize: "", 
+  animalGender: "",
+  animalVaccinated: false, 
+  animalHealthStatus: "", 
+  animalLocation: "", 
+  animalDescription: "",
+  category: "cat", 
+  status: "Available for adoption", 
+});
+
+// State to manage the selected animal image file
+const [animalImage, setAnimalImage] = useState(null);
+
+// Handles changes in form inputs
+const handleChange = (e) => {
+  const { name, value, type, checked } = e.target; 
+  setFormData((prevData) => ({
+    ...prevData,
+    [name]: type === "checkbox" ? checked : value, 
+  }));
+};
+
+
+
+// Handles the selection of an image file
+const setImage = (e) => {
+  const file = e.target.files[0]; // Get gareko selected file
+  if (file) {
+    setAnimalImage(file); // Update animalImage state with the selected file
+  }
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault(); 
+
+  const formDataToSubmit = new FormData(); //it is form object which can hold text and image.
+
+  Object.entries(formData).forEach(([key, value]) => {//object.entries ley  key value pair of object lai each array maa convert garxa. aba array maa convert garepaxi foreach loop lagauna ni sakinxa. foreach array ley tyo convert gareko each array dinxa(like all array maa loop lagxa)..
+    formDataToSubmit.append(key, value);//form data to submit maa aako array lai append gareko. like animalName maa user ley helako animal ko name append/inject gareko palipilo.
   });
-  
-  const [animalImage, setAnimalImage] = useState(null); // state for image file
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
+  // Append the selected image file if it exists
+  if (animalImage) {
+    formDataToSubmit.append("animalImage", animalImage);
+  }
 
-  const setImage = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setAnimalImage(file); // Update animalImage state with selected file
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formDataToSubmit = new FormData(); // Create FormData to hold both text data and image
-
-    // Append form data fields
-    Object.entries(formData).forEach(([key, value]) => {
-      formDataToSubmit.append(key, value);
-    });
-    console.log(formDataToSubmit,"Form to submit");
-    // Append the image file
-    if (animalImage) {
-      formDataToSubmit.append("animalImage", animalImage);
-    }
-
-    try {
-      const response = await APIAuthenticated.post("http://localhost:3000/animals", formDataToSubmit, {
+  try {
+    const response = await APIAuthenticated.post(
+      "http://localhost:3000/animals",
+      formDataToSubmit,
+      {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data", //it is a header for file upload
         },
-      });
-
-      if (response.status === 201) {
-        alert("Animal added successfully!");
-        setFormData({
-          animalName: "",
-          animalAge: "",
-          animalSize: "",
-          animalGender: "",
-          animalVaccinated: false,
-          animalHealthStatus: "",
-          animalLocation: "",
-          animalDescription: "",
-          category: "",
-          status: "Available for adoption",
-        });
-        setAnimalImage(null); // Clear the image after successful submit
-      } else {
-        alert("Failed to add animal");
       }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Something went wrong!");
+    );
+
+    if (response.status === 201) {
+      alert("Animal added successfully!");
+
+      setFormData({
+        animalName: "",
+        animalAge: "",
+        animalSize: "",
+        animalGender: "",
+        animalVaccinated: false,
+        animalHealthStatus: "",
+        animalLocation: "",
+        animalDescription: "",
+        category: "cat",
+        status: "Available for adoption",
+      });
+      setAnimalImage(null);
+      navigate("/"); 
+    } else {
+      alert("Failed to add animal");
     }
-  };
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Something went wrong!");
+  }
+};
+
 
   return (
     <>
@@ -118,6 +134,7 @@ const CreateAnimal = () => {
               <input
                 type="text"
                 name="animalSize"
+                placeholder="'Small', 'Medium', 'Large'"
                 value={formData.animalSize}
                 onChange={handleChange}
                 required
@@ -131,6 +148,7 @@ const CreateAnimal = () => {
               <input
                 type="text"
                 name="animalGender"
+                placeholder="Male, Female"
                 value={formData.animalGender}
                 onChange={handleChange}
                 required
@@ -169,6 +187,7 @@ const CreateAnimal = () => {
               <input
                 type="text"
                 name="animalHealthStatus"
+                placeholder="Normal, Affected"
                 value={formData.animalHealthStatus}
                 onChange={handleChange}
                 required
@@ -195,8 +214,7 @@ const CreateAnimal = () => {
               <input
                 type="file"
                 name="animalImage"
-                // onChange={handleImageChange}
-                onChange={(e)=>setImage(e.target.files[0])}
+                onChange={setImage}
                 required
                 className="w-full px-4 py-2 bg-gray-800 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500"
               />
@@ -254,6 +272,7 @@ const CreateAnimal = () => {
             </div>
           </div>
         </form>
+
       </div>
       <Footer />
     </>
