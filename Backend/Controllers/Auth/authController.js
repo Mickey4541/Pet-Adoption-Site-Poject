@@ -8,86 +8,102 @@ const User = require("../../Model/userModel");
 
 
 
-exports.register = async (req, res) => {
-    const { username, email, password, role } = req.body;
 
-    // Email validation using Validator.js
-    if (!validator.isEmail(email)) {
+exports.login = async (req, res) => {
+    const { username, email, password } = req.body;
+
+    if (!username || !email || !password) {
         return res.status(400).json({
-            message: "Invalid email format",
+            message: "Please provide email, password, and username"
         });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 8);
+    console.log(username, email, password, "Email and password and username");
 
-    const newUser = new User({
-        username: username,
-        email: email,
-        password: hashedPassword,
-        role: role,
-    });
-    await newUser.save();
+    try {
+        const user = await User.findOne({ email: email }); 
 
-    res.status(201).json({
-        message: `User is registered with username ${username}`,
-    });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+        console.log(token, 'Token generated');
+        res.status(200).json({
+            token,
+            user: {
+                id: user.id,
+                email: user.email,
+                username: user.username,
+                role: user.role
+            },
+        });
+
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
 };
 
 
 
 
+exports.register = async (req, res) => {
+    const { username, email, password, role } = req.body;
 
-exports.login = async (req, res) => {
-    const { username, email, password } = req.body;
+    // Inline validations
+    if (!username || typeof username !== 'string' || username.length < 3 || username.length > 20) {
+        return res.status(400).json({ message: 'Username must be between 3 and 20 characters.' });
+    }
 
-    // Check if all required fields are provided
-    if (!username || !email || !password) {
-        return res.status(400).json({
-            message: "Username, email, and password are required."
-        });
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+        return res.status(400).json({ message: 'Invalid email format.' });
+    }
+
+    if (!password || password.length < 6) {
+        return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
+    }
+
+    if (!role || !['user', 'admin'].includes(role)) {
+        return res.status(400).json({ message: 'Role must be either "user" or "admin".' });
     }
 
     try {
-        // Find user by username and email
-        const user = await User.findOne({
-            $and: [{ username }, { email }]
+        // Check if email already exists
+        const existingUser = await User.findOne({ where: { email } });
+        if (existingUser) {
+            return res.status(409).json({ message: 'Email already in use.' });
+        }
+
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 8);
+
+        // Create new user
+        const user = await User.create({
+            username,
+            email,
+            password: hashedPassword,
+            role,
         });
 
-        // If user not found
-        if (!user) {
-            return res.status(404).json({
-                message: "Invalid credentials. Please check your username or email."
-            });
-        }
-
-        // Validate password
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({
-                message: "Invalid credentials."
-            });
-        }
-
-        // Generate token
-        const token = jwt.sign(
-            { id: user._id, role: user.role },
-            process.env.JWT_SECRET,
-            { expiresIn: "2h" }
-        );
-
-        // Send response
         res.status(200).json({
-            token,
+            message: 'User registered successfully',
             user: {
-                id: user._id,
+                id: user.id,
+                email: user.email,
                 username: user.username,
-                role: user.role
-            }
+                role,
+            },
         });
-    } catch (err) {
-        res.status(500).json({
-            message: "Server error. Please try again later."
-        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
     }
 };
 
@@ -95,68 +111,68 @@ exports.login = async (req, res) => {
 
 
 // forgot password
-exports.forgotPassword = async (req,res)=>{
-    const {email} = req.body;
-    if(!email){
+exports.forgotPassword = async (req, res) => {
+    const { email } = req.body;
+    if (!email) {
         return res.status(400).json({
-            message : "Please provide email "
+            message: "Please provide email "
         })
     }
 
     // check if that email is registered or not
-    const userExist = await User.find({userEmail : email})
-    if(userExist.length == 0){
+    const userExist = await User.find({ userEmail: email })
+    if (userExist.length == 0) {
         return res.status(404).json({
-            message : "Email is not registered"
+            message: "Email is not registered"
         })
     }
 
     // send otp to that email
     const otp = Math.floor(1000 + Math.random() * 9000);
-    userExist[0].otp = otp 
+    userExist[0].otp = otp
     await userExist[0].save()
-   await sendEmail({
-        email :email,
-        subject : "Your Otp of AdpotAnimal forgotPassword",
-        message : `Your otp is ${otp} . Dont share with anyone`
+    await sendEmail({
+        email: email,
+        subject: "Your Otp of AdpotAnimal forgotPassword",
+        message: `Your otp is ${otp} . Dont share with anyone`
     })
     res.status(200).json({
-        message : "OTP sent successfully"
+        message: "OTP sent successfully"
     })
-  
+
 }
 
 
 
 
 // verify otp 
-exports.verifyOtp = async(req,res)=>{
-    const {email,otp} = req.body
-    if(!email || !otp){
+exports.verifyOtp = async (req, res) => {
+    const { email, otp } = req.body
+    if (!email || !otp) {
         return res.status(400).json({
-            message : "Please provide email and otp."
+            message: "Please provide email and otp."
         })
     }
     // check if that otp is correct or not of that email
-   const userExists = await User.find({userEmail : email})
-   if(userExists.length == 0){
-    return res.status(404).json({
-        message : "Email is not registered"
-    })
-   }
-   if(userExists[0].otp !== otp){
-    res.status(400).json({
-        message : "Invalid otp"
-    })
-   }else{
-    // dispost the otp so cannot be used next time the same otp
-    userExists[0].otp = undefined
-    userExists[0].isOtpVerified = true
-    await userExists[0].save()
-    res.status(200).json({
-        message : "Otp is correct"
-    })
-   }
+    const userExists = await User.find({ userEmail: email })
+    if (userExists.length == 0) {
+        return res.status(404).json({
+            message: "Email is not registered"
+        })
+    }
+    if (userExists[0].otp !== otp) {
+        res.status(400).json({
+            message: "Invalid otp"
+        })
+    } else {
+        // dispost the otp so cannot be used next time the same otp
+        userExists[0].otp = undefined
+        userExists[0].isOtpVerified = true
+        await userExists[0].save()
+        res.status(200).json({
+            message: "Otp is correct"
+        })
+    }
 
 
 }
@@ -166,36 +182,36 @@ exports.verifyOtp = async(req,res)=>{
 
 
 //reset password
-exports.resetPassword = async (req,res)=>{
-    const {email,newPassword,confirmPassword} = req.body
-    if(!email || !newPassword || !confirmPassword){
+exports.resetPassword = async (req, res) => {
+    const { email, newPassword, confirmPassword } = req.body
+    if (!email || !newPassword || !confirmPassword) {
         return res.status(400).json({
-            message : "Please provide email,newPassword,confirmPassword"
+            message: "Please provide email,newPassword,confirmPassword"
         })
     }
-    if(newPassword !== confirmPassword){
+    if (newPassword !== confirmPassword) {
         return res.status(400).json({
-            message : "newPassword and confirmPassword doesn't match"
+            message: "newPassword and confirmPassword doesn't match"
         })
     }
 
-    const userExists = await User.find({userEmail:email})
-    if(userExists.length == 0){
+    const userExists = await User.find({ userEmail: email })
+    if (userExists.length == 0) {
         return res.status(404).json({
-            message : "User email not registered"
+            message: "User email not registered"
         })
     }
-    if(userExists[0].isOtpVerified !== true){
+    if (userExists[0].isOtpVerified !== true) {
         return res.status(403).json({
-            message : "You cannot perform this action"
+            message: "You cannot perform this action"
         })
     }
 
-    userExists[0].userPassword = bcrypt.hashSync(newPassword,10)
+    userExists[0].userPassword = bcrypt.hashSync(newPassword, 10)
     userExists[0].isOtpVerified = false;
     await userExists[0].save()
 
     res.status(200).json({
-        message : "Password changed successfully"
+        message: "Password changed successfully"
     })
 }

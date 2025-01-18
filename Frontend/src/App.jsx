@@ -17,6 +17,7 @@ import AdoptNowFormPage from './Pages/AdoptNowFormPage/AdoptNowFormPage';
 import { Provider } from 'react-redux';
 import store from './Store/store';
 import SingleAnimalDetailsPage from './Pages/SingleAnimalDetailsPage/SingleAnimalDetailsPage';
+import CreateAnimal from './Pages/CreateAnimalForm/CreateAnimal';
 
 const App = () => {
 
@@ -68,6 +69,10 @@ const App = () => {
 
         <Route path='/adopt/:id' element={<AdoptNowFormPage/>}/>
         <Route path='/singleanimal/:id' element={<SingleAnimalDetailsPage/>}/>
+
+
+
+        <Route path='/add' element={<CreateAnimal/>}/>
       </Routes>
 
        {/* model pahile nai open xa vani register maa close model pass gareko ani onclose jaha xa tyo open model lai close garna use vayo*/}
