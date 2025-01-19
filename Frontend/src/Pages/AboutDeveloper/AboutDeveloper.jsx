@@ -7,7 +7,7 @@ const AboutDeveloper = () => {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 font-[Oswald]">
         <h2 className="text-4xl font-bold text-center text-white mb-6">
           Meet the Developer
         </h2>
@@ -15,7 +15,7 @@ const AboutDeveloper = () => {
         <div className="max-w-sm mx-auto bg-gray-800 border border-white rounded-lg shadow-lg p-6">
           <div className="text-center mb-4">
             <img
-              src="https://media.licdn.com/dms/image/v2/D4D03AQE0eUJyAsVWoQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1678633512920?e=1742428800&v=beta&t=SsFB6nJsGZaeh9BcskvJBs5OJoGLJepOpXHD5LAkKso"
+              src="https://media.licdn.com/dms/image/v2/D4D03AQFHQFdQIDF__w/profile-displayphoto-shrink_400_400/B4DZRrLxaDHkAg-/0/1736965037442?e=1743033600&v=beta&t=q7YcKcSQkzJ7GjGUIQxtmcACTVhhuvoLmZe0zX6AMLE"
               alt="Developer"
               className="w-32 h-32 mx-auto rounded-full border-4 border-pink-600"
             />

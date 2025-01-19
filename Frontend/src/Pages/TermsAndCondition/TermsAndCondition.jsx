@@ -10,7 +10,7 @@ const TermsAndCondition = () => {
 
 
 
-      <div className="container mx-auto px-4 pb-6">
+      <div className="container mx-auto px-4 pb-6 font-[Oswald]">
         <h2 className="text-4xl font-bold text-center mt-8 mb-6 text-white">
           <span className="text-pink-600">Terms and Conditions</span>
         </h2>
@@ -142,9 +142,9 @@ const TermsAndCondition = () => {
             If you have any questions or concerns about these Terms and Conditions, please contact us at:
           </p>
           <p className="text-lg">
-            <strong>Email:</strong>{" "}
+            <strong>Email:</strong><br />
             <Link to="mailto:terms@adpotpet.com" className="text-pink-600 hover:underline">
-              terms@yourwebsite.com
+              terms@adoptpet.com
             </Link>
           </p>
         </div>

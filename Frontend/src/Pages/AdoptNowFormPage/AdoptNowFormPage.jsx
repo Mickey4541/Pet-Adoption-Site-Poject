@@ -15,7 +15,7 @@ const AdoptNowFormPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const { id } = useParams(); 
-  console.log(id, "This is single animal id"); // Example ID: 67890c58ea287e0d4f040ccd
+  console.log(id, "This is single animal id"); 
   
   const navigate = useNavigate();
 

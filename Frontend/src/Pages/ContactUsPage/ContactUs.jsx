@@ -6,11 +6,11 @@ const ContactUs = () => {
   return (
     <>
       <Navbar />
-      <h2 className="text-4xl font-bold text-center mt-8 mb-6 text-white">
+      <h2 className="text-4xl font-bold text-center mt-8 mb-6 text-white font-[Oswald]">
         <span className="text-pink-600">Contact Us</span>
       </h2>
 
-      <div className="container mx-auto px-4 pb-6">
+      <div className="container mx-auto px-4 pb-6 font-[Oswald]">
         <p className="text-white text-lg text-center mb-6">
           We are always happy to hear from you! Whether you have a question, feedback, or need assistance, feel free to get in touch with us. We are committed to providing the best experience for you.
         </p>

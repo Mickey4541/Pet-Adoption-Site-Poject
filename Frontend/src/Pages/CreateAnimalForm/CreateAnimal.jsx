@@ -23,6 +23,7 @@ const [formData, setFormData] = useState({
 
 // State to manage the selected animal image file
 const [animalImage, setAnimalImage] = useState(null);
+const [flashMessage, setFlashMessage] = useState(null);
 
 // Handles changes in form inputs
 const handleChange = (e) => {
@@ -63,13 +64,17 @@ const handleSubmit = async (e) => {
       formDataToSubmit,
       {
         headers: {
-          "Content-Type": "multipart/form-data", //it is a header for file upload
+          "Content-Type": "multipart/form-data", 
         },
       }
     );
 
     if (response.status === 201) {
-      alert("Animal added successfully!");
+      setFlashMessage({
+        message: "Animal Added Successfully",
+        type: "success"
+      });
+      
 
       setFormData({
         animalName: "",
@@ -84,9 +89,15 @@ const handleSubmit = async (e) => {
         status: "Available for adoption",
       });
       setAnimalImage(null);
-      navigate("/"); 
+      setTimeout(() => {
+        navigate("/"); 
+      }, 3000);
+     
     } else {
-      alert("Failed to add animal");
+      setFlashMessage({
+        message: "failed to Add Animal.",
+        type: "error"
+      });
     }
   } catch (error) {
     console.error("Error:", error);
@@ -99,12 +110,17 @@ const handleSubmit = async (e) => {
     <>
       <Navbar />
       <div className="max-w-2xl mx-auto p-6 bg-gray-700 rounded-lg shadow-lg font-[Oswald]">
-        <h2 className="text-4xl font-bold text-pink-600 text-center mb-6">Add Animal</h2>
+        
+        <h2 className="text-4xl font-bold text-pink-600 text-center mb-6">
+          Add Animal
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="space-y-6">
             {/* Animal Name */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">Animal Name</label>
+              <label className="block text-sm font-semibold text-white mb-2">
+                Animal Name
+              </label>
               <input
                 type="text"
                 name="animalName"
@@ -117,7 +133,9 @@ const handleSubmit = async (e) => {
 
             {/* Animal Age */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">Animal Age</label>
+              <label className="block text-sm font-semibold text-white mb-2">
+                Animal Age
+              </label>
               <input
                 type="text"
                 name="animalAge"
@@ -130,7 +148,9 @@ const handleSubmit = async (e) => {
 
             {/* Animal Size */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">Animal Size</label>
+              <label className="block text-sm font-semibold text-white mb-2">
+                Animal Size
+              </label>
               <input
                 type="text"
                 name="animalSize"
@@ -144,7 +164,9 @@ const handleSubmit = async (e) => {
 
             {/* Animal Gender */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">Animal Gender</label>
+              <label className="block text-sm font-semibold text-white mb-2">
+                Animal Gender
+              </label>
               <input
                 type="text"
                 name="animalGender"
@@ -158,22 +180,32 @@ const handleSubmit = async (e) => {
 
             {/* Vaccinated */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">Vaccinated</label>
+              <label className="block text-sm font-semibold text-white mb-2">
+                Vaccinated
+              </label>
               <div className="flex items-center">
                 <button
                   type="button"
-                  onClick={() => setFormData({ ...formData, animalVaccinated: true })}
+                  onClick={() =>
+                    setFormData({ ...formData, animalVaccinated: true })
+                  }
                   className={`px-4 py-2 mr-2 rounded-xl ${
-                    formData.animalVaccinated ? "bg-pink-500 text-white" : "bg-gray-300 text-gray-800"
+                    formData.animalVaccinated
+                      ? "bg-pink-500 text-white"
+                      : "bg-gray-300 text-gray-800"
                   }`}
                 >
                   True
                 </button>
                 <button
                   type="button"
-                  onClick={() => setFormData({ ...formData, animalVaccinated: false })}
+                  onClick={() =>
+                    setFormData({ ...formData, animalVaccinated: false })
+                  }
                   className={`px-4 py-2 rounded-xl ${
-                    !formData.animalVaccinated ? "bg-pink-500 text-white" : "bg-gray-300 text-gray-800"
+                    !formData.animalVaccinated
+                      ? "bg-pink-500 text-white"
+                      : "bg-gray-300 text-gray-800"
                   }`}
                 >
                   False
@@ -183,7 +215,9 @@ const handleSubmit = async (e) => {
 
             {/* Health Status */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">Health Status</label>
+              <label className="block text-sm font-semibold text-white mb-2">
+                Health Status
+              </label>
               <input
                 type="text"
                 name="animalHealthStatus"
@@ -197,7 +231,9 @@ const handleSubmit = async (e) => {
 
             {/* Animal Location */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">Location</label>
+              <label className="block text-sm font-semibold text-white mb-2">
+                Location
+              </label>
               <input
                 type="text"
                 name="animalLocation"
@@ -210,7 +246,9 @@ const handleSubmit = async (e) => {
 
             {/* Animal Image */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">Animal Image</label>
+              <label className="block text-sm font-semibold text-white mb-2">
+                Animal Image
+              </label>
               <input
                 type="file"
                 name="animalImage"
@@ -222,7 +260,9 @@ const handleSubmit = async (e) => {
 
             {/* Animal Description */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">Description</label>
+              <label className="block text-sm font-semibold text-white mb-2">
+                Description
+              </label>
               <textarea
                 name="animalDescription"
                 value={formData.animalDescription}
@@ -234,7 +274,9 @@ const handleSubmit = async (e) => {
 
             {/* Category */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">Category</label>
+              <label className="block text-sm font-semibold text-white mb-2">
+                Category
+              </label>
               <select
                 name="category"
                 value={formData.category}
@@ -250,14 +292,18 @@ const handleSubmit = async (e) => {
 
             {/* Status */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">Status</label>
+              <label className="block text-sm font-semibold text-white mb-2">
+                Status
+              </label>
               <select
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
                 className="w-full px-4 py-2 bg-gray-800 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500"
               >
-                <option value="Available for adoption">Available for adoption</option>
+                <option value="Available for adoption">
+                  Available for adoption
+                </option>
                 <option value="Already adopted">Already adopted</option>
               </select>
             </div>
@@ -270,9 +316,19 @@ const handleSubmit = async (e) => {
                 Add Animal
               </button>
             </div>
+            {flashMessage && (
+          <div
+            className={`p-4 mb-4 text-center font-bold font-[Oswald] text-2xl rounded-full ${
+              flashMessage.type === "success"
+                ? "bg-green-700 text-white"
+                : "bg-red-600 text-white"
+            }`}
+          >
+            {flashMessage.message}
+          </div>
+        )}
           </div>
         </form>
-
       </div>
       <Footer />
     </>

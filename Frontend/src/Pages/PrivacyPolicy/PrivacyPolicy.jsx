@@ -10,20 +10,20 @@ const PrivacyPolicy = () => {
 
 
       
-      <div className="container mx-auto px-4 pb-6">
+      <div className="container mx-auto px-4 pb-6 font-[Oswald]">
         <h2 className="text-4xl font-bold text-center mt-8 mb-6 text-white">
           <span className="text-pink-600">Privacy Policy</span>
         </h2>
         <p className="text-white text-lg text-center mb-6">
           Your privacy is important to us. This Privacy Policy outlines the types of information we collect and how we use, share, and protect it.
         </p>
-
+ text-pink-500
 
 
 
 
         <div className="bg-gray-800 text-white p-6 rounded-lg shadow-md mb-6">
-          <h3 className="text-3xl font-bold text-center mb-4">Introduction</h3>
+          <h3 className="text-3xl font-bold text-center mb-4 text-pink-500">Introduction</h3>
           <p className="text-lg">
             Welcome to our Pet Adoption Website! This Privacy Policy explains how we collect, use, and protect the personal information you provide to us while using our services. By using our website, you agree to the practices outlined in this policy.
           </p>
@@ -35,7 +35,7 @@ const PrivacyPolicy = () => {
 
 
         <div className="bg-gray-800 text-white p-6 rounded-lg shadow-md mb-6">
-          <h3 className="text-3xl font-bold text-center mb-4">Information We Collect</h3>
+          <h3 className="text-3xl font-bold text-center mb-4 text-pink-500">Information We Collect</h3>
           <p className="text-lg">
             We collect the following types of information to provide and improve our services:
           </p>
@@ -52,7 +52,7 @@ const PrivacyPolicy = () => {
 
 
         <div className="bg-gray-800 text-white p-6 rounded-lg shadow-md mb-6">
-          <h3 className="text-3xl font-bold text-center mb-4">How We Use Your Information</h3>
+          <h3 className="text-3xl font-bold text-center mb-4 text-pink-500">How We Use Your Information</h3>
           <p className="text-lg">
             The information we collect is used for the following purposes:
           </p>
@@ -69,7 +69,7 @@ const PrivacyPolicy = () => {
 
 
         <div className="bg-gray-800 text-white p-6 rounded-lg shadow-md mb-6">
-          <h3 className="text-3xl font-bold text-center mb-4">Sharing Your Information</h3>
+          <h3 className="text-3xl font-bold text-center mb-4 text-pink-500">Sharing Your Information</h3>
           <p className="text-lg">
             We do not sell, rent, or trade your personal information. However, we may share your information in the following situations:
           </p>
@@ -85,7 +85,7 @@ const PrivacyPolicy = () => {
 
 
         <div className="bg-gray-800 text-white p-6 rounded-lg shadow-md mb-6">
-          <h3 className="text-3xl font-bold text-center mb-4">Data Security</h3>
+          <h3 className="text-3xl font-bold text-center mb-4 text-pink-500">Data Security</h3>
           <p className="text-lg">
             We take reasonable precautions to protect your personal information. While we strive to protect your data, no method of transmission over the internet or electronic storage is 100% secure.
           </p>
@@ -97,7 +97,7 @@ const PrivacyPolicy = () => {
 
 
         <div className="bg-gray-800 text-white p-6 rounded-lg shadow-md mb-6">
-          <h3 className="text-3xl font-bold text-center mb-4">Your Rights</h3>
+          <h3 className="text-3xl font-bold text-center mb-4 text-pink-500">Your Rights</h3>
           <p className="text-lg">
             You have the right to:
           </p>
@@ -115,7 +115,7 @@ const PrivacyPolicy = () => {
 
 
         <div className="bg-gray-800 text-white p-6 rounded-lg shadow-md mb-6">
-          <h3 className="text-3xl font-bold text-center mb-4">Changes to This Privacy Policy</h3>
+          <h3 className="text-3xl font-bold text-center mb-4 text-pink-500">Changes to This Privacy Policy</h3>
           <p className="text-lg">
             We may update this Privacy Policy from time to time. Any changes will be posted on this page with the updated date. Please review this policy periodically.
           </p>
@@ -127,7 +127,7 @@ const PrivacyPolicy = () => {
 
 
         <div className="bg-gray-800 text-white p-6 rounded-lg shadow-md mb-6">
-          <h3 className="text-3xl font-bold text-center mb-4">Contact Us</h3>
+          <h3 className="text-3xl font-bold text-center mb-4 text-pink-500">Contact Us</h3>
           <p className="text-lg">
             If you have any questions or concerns about this Privacy Policy, please contact us at:
           </p>

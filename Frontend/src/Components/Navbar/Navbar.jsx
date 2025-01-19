@@ -213,7 +213,7 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
   const { token, data } = useSelector((state) => state.auth);
-  console.log("Token is", token);
+  // console.log("Token is", token); //aako xa
   
 
 
@@ -227,7 +227,7 @@ const Navbar = () => {
     const userRole = localStorage.getItem("userRole");
     setStoredUserRole(userRole)
 
-    console.log("The user role  form nav", storedUserRole); //admin aako xa 
+    // console.log("The user role  form nav", storedUserRole); //admin aako xa 
     
     if (storedToken) {
       dispatch(setToken(storedToken));
@@ -267,7 +267,7 @@ const Navbar = () => {
     dispatch(setUser(null));
     localStorage.removeItem("token");
     localStorage.removeItem("userRole");
-    window.location.href = "/";
+    // window.location.href = "/";
   };
 
 
