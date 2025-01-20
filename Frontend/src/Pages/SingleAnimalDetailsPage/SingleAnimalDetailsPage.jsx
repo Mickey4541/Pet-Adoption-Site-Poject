@@ -28,25 +28,40 @@ const SingleAnimalDetailsPage = () => {
 
 
 
+  // useEffect(() => {
+  //   const storedToken = localStorage.getItem("token");
+  //   const userRole = localStorage.getItem("userRole");
+  //   if (userRole) {
+  //     setStoredUserRole(userRole); // Update state
+  //   }
+  //   console.log("The user role from single animal page:", userRole);
+  //   console.log("The token from single animal page:", storedToken);
+  //   if (storedToken) {
+  //     dispatch(setToken(storedToken)); // Token is set in Redux.
+  //   } else {
+  //     console.log("No stored token"); 
+  //   }
+  //   dispatch(fetchSingleAnimal(id)); // Fetch the animal details using the id from the URL.
+  // }, [dispatch, id]); 
+
+
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     const userRole = localStorage.getItem("userRole");
-
+  
     if (userRole) {
-      setStoredUserRole(userRole); // Update state
+      setStoredUserRole(userRole);
     }
-
-    console.log("The user role from single animal page:", userRole);
-    console.log("The token from single animal page:", storedToken);
-
-    if (storedToken) {
-      dispatch(setToken(storedToken)); // Token is set in Redux.
-    } else {
-      console.log("No stored token"); 
+  
+    if (!storedToken || userRole !== "admin") {
+      navigate("/login"); // Redirect unauthorized users
+      return;
     }
-    dispatch(fetchSingleAnimal(id)); // Fetch the animal details using the id from the URL.
-  }, [dispatch, id]); 
-
+  
+    dispatch(setToken(storedToken)); // Token is set in Redux.
+    dispatch(fetchSingleAnimal(id)); // Fetch animal details.
+  }, [dispatch, id, navigate]);
+  
 
 
 

@@ -69,14 +69,20 @@ const UpdateAnimal = () => {
           navigate('/');  
         }, 3000);  
       } else {
-        setFlashMessage("Something went wrong. Please try again.");
+        setFlashMessage({
+          message: "Something went wrong. Please try again.",
+          type: 'error'
+        });
         setTimeout(() => {
           setFlashMessage(null);
         },3000)
       }
     } catch (error) {
       console.error(error);
-      setFlashMessage("Error updating animal. Please check the details.");
+      setFlashMessage({
+        message: "Error updating animal. Please check the details.",
+        type: 'error'
+      });
       setTimeout(()=>{
         setFlashMessage(null);
       },3000)
@@ -103,7 +109,8 @@ const fetchAnimal = async () => {
       setCurrentImageUrl(response?.data?.imageUrl);
     }
   } catch (error) {
-    setFlashMessage("Error fetching animal details.");
+    console.log(error);
+    
   }
 };
 
@@ -320,12 +327,12 @@ useEffect(() => {
                 type="submit"
                 className="px-6 py-2 text-white bg-pink-600 rounded-xl hover:bg-pink-700"
               >
-                Add Animal
+                Update Animal
               </button>
             </div>
             {flashMessage && (
           <div
-            className={`p-4 mb-4 text-center font-bold font-[Oswald] text-2xl rounded-full ${
+            className={`p-2 mb-2 text-center font-bold font-[Oswald] text-2xl rounded-full ${
               flashMessage.type === "success"
                 ? "bg-green-700 text-white"
                 : "bg-red-600 text-white"
