@@ -22,29 +22,29 @@ const ContactUs = () => {
             <p>
               <strong className="text-pink-600">Website:</strong>{" "}
               <a href="https://www.demoadoptpet.com" className="text-pink-600 hover:underline">
-                www.yourwebsite.com
+                www.demoadoptpet.com
               </a>
             </p>
             <p>
               <strong className="text-pink-600">Email:</strong>{" "}
               <a href="mailto:info@adoptpet.com" className="text-pink-600 hover:underline">
-                info@yourwebsite.com
+                info@adoptpet.com
               </a>
             </p>
           </div>
 
           {/* Social Media Links using Remix Icon */}
           <div className="flex justify-center space-x-8">
-            <a href="https://www.facebook.com/yourprofile" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
               <i className="ri-facebook-circle-fill text-3xl text-pink-600 hover:text-pink-400"></i>
             </a>
-            <a href="https://www.instagram.com/yourprofile" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
               <i className="ri-instagram-line text-3xl text-pink-600 hover:text-pink-400"></i>
             </a>
-            <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.linkedin.com/in/" target="_blank" rel="noopener noreferrer">
               <i className="ri-linkedin-fill text-3xl text-pink-600 hover:text-pink-400"></i>
             </a>
-            <a href="https://twitter.com/yourprofile" target="_blank" rel="noopener noreferrer">
+            <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
               <i className="ri-twitter-x-line text-3xl text-pink-600 hover:text-pink-400"></i>
             </a>
           </div>
@@ -59,7 +59,7 @@ const ContactUs = () => {
           <p className="text-white text-lg text-center">
             For urgent inquiries, please email us directly at{" "}
             <a href="mailto:support@yourwebsite.com" className="text-pink-600 hover:underline">
-              support@yourwebsite.com
+              support@demoadoptpet.com
             </a>.
           </p>
         </div>

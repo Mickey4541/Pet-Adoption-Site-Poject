@@ -30,7 +30,7 @@ const AboutDeveloper = () => {
 
           <div className="flex justify-center mt-6 space-x-4">
             <a
-              href="https://www.linkedin.com/in/rajan-bhandari"
+              href="https://www.linkedin.com/in/razan-bhandari"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-pink-600"
@@ -40,7 +40,7 @@ const AboutDeveloper = () => {
 
 
             <a
-              href="https://github.com/rajan-bhandari"
+              href="https://github.com/mickey4541"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-pink-600"
@@ -50,7 +50,7 @@ const AboutDeveloper = () => {
 
 
             <a
-              href="https://twitter.com/rajanbhandari"
+              href="https://twitter.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-pink-600"

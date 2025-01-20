@@ -200,6 +200,7 @@ exports.updateAnimal = async (req, res) => {
         category,
         status,
     } = req.body;
+console.log("The animal name is ", animalName);
 
     // Input validation
     if (!animalName || typeof animalName !== 'string') {
