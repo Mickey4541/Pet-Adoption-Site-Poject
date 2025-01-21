@@ -38,7 +38,9 @@ const Footer = () => {
             <Link to='/contactus'>
             <li className="hover:text-green-400 cursor-pointer font-[Oswald]">Contact Us</li>
             </Link>
+            <Link to='/donate'>
             <li className="hover:text-green-400 cursor-pointer font-[Oswald]">Donate Us</li>
+            </Link>
             <Link to='/tac'>
             <li className="hover:text-green-400 cursor-pointer font-[Oswald]">
               Terms and Conditions

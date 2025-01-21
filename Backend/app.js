@@ -69,6 +69,8 @@ app.get('/',(request,response) => {
 })
 
 
+const DonateRoute = require('./Routes/User/DonateRoute')
+app.use("/api/payment", DonateRoute)
 
 
 //By default nodejs didn't give access to see the files of its codebase. tara hamile database maa rakheko image files haru frontend maa dekhauna parni xa ra koi user ley request garyo vani dekhauna parni xa. frontend developer ley pani ta frontend develop garda access magxa. so hamile nodejs lai yo sabai access dey hai vanna ko lagi yo code. simply:

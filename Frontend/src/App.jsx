@@ -19,6 +19,7 @@ import store from "./Store/store";
 import SingleAnimalDetailsPage from "./Pages/SingleAnimalDetailsPage/SingleAnimalDetailsPage";
 import CreateAnimal from "./Pages/CreateAnimalForm/CreateAnimal";
 import UpdateAnimal from "./Pages/UpdateAnimal/UpdateAnimal";
+import DonatePage from "./Pages/DonatePage/DonatePage";
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,6 +65,8 @@ const App = () => {
 
           <Route path="/add" element={<CreateAnimal />} />
           <Route path="/update/animal/:id" element={<UpdateAnimal />} />
+
+          <Route path="/donate" element={<DonatePage/>}/>
         </Routes>
 
         {/* model pahile nai open xa vani register maa close model pass gareko ani onclose jaha xa tyo open model lai close garna use vayo*/}
