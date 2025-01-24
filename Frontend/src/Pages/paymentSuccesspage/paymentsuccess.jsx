@@ -5,10 +5,12 @@ import { API } from "../../http";
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
 
+
   useEffect(() => {
     const verifyPayment = async () => {
       const pidx = searchParams.get("pidx");
       const paymentId = searchParams.get("paymentId");
+
 
       if (pidx && paymentId) {
         try {
@@ -32,8 +34,12 @@ const PaymentSuccess = () => {
       }
     };
 
+
+    
     verifyPayment();
   }, [searchParams]);
+
+
 
   return (
     <div className="text-center p-8">
