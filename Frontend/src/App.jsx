@@ -69,7 +69,7 @@ const App = () => {
 
           <Route path="/donate" element={<DonatePage/>}/>
 
-          <Route path="/payment/success/" element={<PaymentSuccess />} />
+          <Route path="api/payment/success" element={<PaymentSuccess />} />
 
         </Routes>
 

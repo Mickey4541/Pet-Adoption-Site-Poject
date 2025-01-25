@@ -14,7 +14,7 @@ const donationSchema = new mongoose.Schema({
     address: {
         type: String,
         required: true,
-        trim: true,
+        // trim: true,
     },
     amount: {
         type: Number,
@@ -22,12 +22,12 @@ const donationSchema = new mongoose.Schema({
         min: 1,
     },
     paymentId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: true,
         unique: true,
     },
     paymentDetails: {
-        method: { type: String, default: null },
+        method: { type: String, default: 'Khalti' },
         status: { type: String, default: "pending" },
         pidx: { type: String, default: null },
     },
